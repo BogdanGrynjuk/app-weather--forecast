@@ -1,7 +1,7 @@
 import React from 'react'
 import { LoadInner, LoadLoader } from './Loader.styled'
 
-const Loader = () => {
+const Loader: React.FC = () => {
   return (
     <LoadLoader>
       <LoadInner className='load-one' />
