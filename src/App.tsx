@@ -26,7 +26,7 @@ const App: React.FC = () => {
 
   const IPINFO_TOKEN = "805536fa8da0c5";
   const OPENWEATHER_API_KEY = "ece85ccbe9bef82868f04d46c0d82058";
-  const URL_OPENWEATHER_API = "http://api.openweathermap.org";
+  const URL_OPENWEATHER_API = "https://api.openweathermap.org";
   
   const getCoordinates = async () => {
     try {
@@ -96,11 +96,7 @@ const App: React.FC = () => {
       getNameCityByCoordinates(latitude, longitude);
       getCurrentWeatherForecast(latitude, longitude);
     }
-  }, [latitude, longitude]);
-
- 
-
- 
+  }, [latitude, longitude]); 
 
   return (
     <main
