@@ -29,10 +29,25 @@ export type weatherForecastType = {
   }]
 };
 
-export type optionType = {
+export type cityType = {
   name: string
-  country: string,
+  country: string
+  local_names?: {
+    uk?: string
+  }
   lat: number
   lon: number
+  state: string
+};
+
+export type optionType = {
+  name: string
+  country: string
+  local_names?: {
+    uk?: string
+  }
+  lat: number
+  lon: number
+  state: string
 }
 
