@@ -13,8 +13,13 @@ import Wind from "components/Icons/Wind";
 import useWeatherForecast from "hooks/useWeatherForecast";
 
 import { cityType } from "./types/index";
+import Layout from "components/Layout";
+import Header from "components/Header";
+
 
 const App: React.FC = () => {
+ 
+
   const {
     city,
     term,
@@ -26,28 +31,13 @@ const App: React.FC = () => {
   } = useWeatherForecast();
 
   return (
-    <main
-      style={{
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#ffffff'
-      }}
-    >
+    <Layout>
+     
       {city && forecast &&
         <>
+        <Header city={city} />
           <div>
-            <span>
-              {(city && city?.local_names && city.local_names?.uk)
-                ? city.local_names.uk
-                : city.name
-              }
-            </span>
-            <span> {city.country}</span>
-            <span> {city.state}</span>
+            погода
         </div>
         <div>
           <span>{forecast.list[0].weather[0].description}</span>
@@ -84,7 +74,7 @@ const App: React.FC = () => {
 
       </div>
       
-      <div>
+      <div style={{ backgroundColor: ' rgba(66, 54, 54, 0.5)' }}>
         <div style={{ display: 'flex' }}>
           <WeatherSvg state="sunny" width={50} height={50} />
           <WeatherSvg state="clear-night" width={50} height={50} />
@@ -112,7 +102,7 @@ const App: React.FC = () => {
         <p style={{ color: "white", textAlign: "center" }}>Additional icons</p>
 
       </div>
-    </main>
+    </Layout>
   );
 };
 

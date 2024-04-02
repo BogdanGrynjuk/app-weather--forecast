@@ -1,3 +1,33 @@
+import { Theme } from '@emotion/react';
+
+export interface ITheme extends Theme {
+  color: {
+    textPrimary: string;
+    textSecondary: string;
+    bgPrimary: string;
+    bgSecondary: string;   
+  };
+  ff: {
+    inconsolata: string;
+  };
+  fw: {
+    regular: number;
+    semiBold: number;
+    bold: number;
+  };
+  fs: {
+    s: string;
+    m: string;
+    l: string;
+    xl: string;   
+  };
+  mq: {
+    mobile: string;
+    tablet: string;
+    desktop: string;
+  };
+};
+
 export type weatherForecastType = {
   country: string
   sunrise: number
@@ -49,5 +79,5 @@ export type optionType = {
   lat: number
   lon: number
   state: string
-}
+};
 
