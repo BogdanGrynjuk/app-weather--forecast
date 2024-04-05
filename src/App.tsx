@@ -30,12 +30,27 @@ const App: React.FC = () => {
     handleSubmit
   } = useWeatherForecast();
 
+  let placeholder: string = '';
+
+  if (city) {
+    placeholder = (city && city?.local_names && city.local_names?.uk)
+      ? city.local_names.uk
+      : city.name          
+  } else {
+    placeholder = 'Назва населеного пункту, країни або регіону'
+  }
+
   return (
     <Layout>
      
       {city && forecast &&
         <>
-        <Header city={city} />
+        <Header
+          city={city}
+          term={term}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
           <div>
             погода
         </div>
@@ -52,10 +67,10 @@ const App: React.FC = () => {
         <form onSubmit={handleSubmit}>
           
         <input
-          type="text"
-          value={term}
-          onChange={handleInputChange}
-          placeholder="Enter city name"
+            type="text"
+            value={term}
+            onChange={handleInputChange}
+            placeholder={`${placeholder}`}
           />
         <button type="submit" style={{ color: "black" }}>Search</button>
           </form>

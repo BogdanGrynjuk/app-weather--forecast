@@ -45,7 +45,7 @@ export const LoadInner = styled.div`
     left: 0%;
     top: 0%;
     animation: ${rotateOne} 1.15s linear infinite;
-    border-bottom: 3px solid #5c5edc;
+    border-bottom: 3px solid rgba(92, 94, 220, 1);
   }
   &.load-two {
     right: 0%;

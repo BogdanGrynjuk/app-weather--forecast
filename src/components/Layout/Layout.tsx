@@ -19,8 +19,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <source src={videoSrc} type="video/mp4" />
       </VideoBG>
       <Content>
-
-      {children}
+        {children}
       </Content>
     </>
   );

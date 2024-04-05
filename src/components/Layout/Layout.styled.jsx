@@ -8,9 +8,8 @@ export const VideoBG = styled.video`
   z-index: -1;  
 `;
 
-export const Content = styled.div`
-  padding: 20px;
-  height: 100vh;
+export const Content = styled.div`  
+  padding: 20px;  
   width: 100%;
   display: flex;
   flex-direction: column;
