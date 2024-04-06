@@ -4,8 +4,13 @@ export interface ITheme extends Theme {
   color: {
     textPrimary: string;
     textSecondary: string;
+    
     bgPrimary: string;
-    bgSecondary: string;   
+    bgSecondary: string;
+    bgBtnSearch: string;
+    bgBtnClose: string;
+    bgInputSearch: string;
+
   };
   ff: {
     inconsolata: string;
@@ -67,7 +72,7 @@ export type cityType = {
   }
   lat: number
   lon: number
-  state: string
+  state?: string
 };
 
 export type optionType = {

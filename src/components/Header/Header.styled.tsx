@@ -2,7 +2,22 @@ import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
 import { ITheme } from 'types';
 
-const progress1 = keyframes`
+const progress = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }  
+  40% {
+    transform: translateX(var(--translate-x));
+    opacity: 1;
+  }
+  50%, 100% {
+    transform: translateX(var(--translate-x));
+    opacity: 0;
+  }
+`;
+
+const progress2 = keyframes`
   0% {
     transform: scaleX(0);
     opacity: .5;
@@ -17,54 +32,66 @@ const progress1 = keyframes`
   }
 `;
 
-const progress2 = keyframes`
-  0% {
-    transform: translateX(0);
-    opacity: 0;
-  }  
-  40% {
-    transform: translateX(300px);
-    opacity: 1;
-  }
-  50%, 100% {
-    transform: translateX(300px);
-    opacity: 0;
-  }
-`;
-
 export const Wrapper = styled.header<{ theme: ITheme }>`  
   position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
+ 
+  padding: 10px;
   border-radius: 10px;
   background-color: ${p => p.theme.color.bgPrimary};
 
-`;
-export const Logo = styled.span<{ theme: ITheme }>`
-  position: relative;
-  
+  @media screen and (${p => p.theme.mq.tablet}) {
+    padding: 20px;
+  }
 `;
 
-export const Text = styled.h1<{ theme: ITheme }>`
-  margin-bottom: 10px;
-  font-size: ${p => p.theme.fs.xl};
+export const Location = styled.span <{ theme: ITheme }>`
+  position: relative;  
+  color: ${p => p.theme.color.textPrimary};  
+`;
+
+export const Name = styled.h1<{ theme: ITheme }>` 
+  font-size: ${p => p.theme.fs.l};
   font-weight: ${p => p.theme.fw.semiBold};
-  color: ${p => p.theme.color.textPrimary};
+
+  @media screen and (${p => p.theme.mq.desktop}) {
+    font-size: ${p => p.theme.fs.xl};
+  } 
 `;
 
-export const Line = styled.div`
+export const Details = styled.p<{ theme: ITheme }>`
+  margin-bottom: 10px;  
+  font-size: ${p => p.theme.fs.s};
+
+  @media screen and (${p => p.theme.mq.desktop}) {
+    font-size: ${p => p.theme.fs.m};
+    color: rgb(168, 203, 255)
+  } 
+`;
+
+export const Content = styled.div`
+  position: relative;
+  display: flex;  
+  align-items: center;
+  height: 60px;
+`;
+
+export const Line = styled.div<{ theme: ITheme }>`
   position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 100%;
+  bottom: 8px;
+  left: calc(50% + 10px);
+  width: calc(100% - 20px);
   margin-left: -50%;
   height: 3px;
   border-radius: 50%;
+
+  @media screen and (${p => p.theme.mq.tablet}) {
+    left: calc(50% + 20px);
+    bottom: 15px;
+    width: calc(100% - 40px);
+  }
   
   &:before {
-    animation: ${progress1} 8s infinite linear;   
+    animation: ${progress2} 8s infinite linear;   
     transform-origin: 0 0;
     content: "";
     display: block;
@@ -79,35 +106,53 @@ export const Line = styled.div`
       rgba(255, 255, 255, 0.1) 10%, 
       rgba(255, 255, 255, 0.4) 80%, 
       rgba(255, 255, 255, 1));
+
+      @media screen and (${p => p.theme.mq.tablet}) {
+        animation-duration: 12s;
+      }
+
+      @media screen and (${p => p.theme.mq.desktop}) {
+        animation-duration: 16s;
+      }
   }
   
   &:after {
+    --translate-x: calc(320px - 10px - 10px - 40px);
     content: "";
     position: absolute;
-    animation: ${progress2} 8s infinite linear;    
+    animation: ${progress} 8s infinite linear;    
     transform-origin: 90% 50%;
     margin-left: -24px;
-    top: 0;
-    width: 10%;
-    height: 5px;
+    top: -6px;
+    width: 40px;
+    height: 15px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.55);
     filter: blur(5px);
-    box-shadow: 0 0 5px 3px rgba(255, 255, 255, 0.4),
-                -10px 0 5px 2px rgba(255, 255, 255, 0.3),
-                -20px 0 5px 1px rgba(255, 255, 255, 0.2),
-                -30px 0 3px 1px rgba(255, 255, 255, 0.1),
-                -40px 0 3px 1px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 10px 6px rgba(255, 255, 255, 0.4),
+                -20px 0 15px 4px rgba(255, 255, 255, 0.3),
+                -40px 0 15px 2px rgba(255, 255, 255, 0.2),
+                -60px 0 10px 1px rgba(255, 255, 255, 0.1),
+                -80px 0 10px 1px rgba(255, 255, 255, 0.05);
+    @media screen and (${p => p.theme.mq.tablet}) {
+      --translate-x: calc(834px - 20px - 20px - 50px);      
+      animation-duration: 12s;
+    }
+
+     @media screen and (${p => p.theme.mq.desktop}) {
+      --translate-x: calc(1440px - 20px - 20px - 50px);      
+      animation-duration: 16s;
+    }
   }
 `;
 
-export const Container = styled.form`
+export const Form = styled.form< { theme: ITheme }>`
   position: absolute;  
-  right: 20px;
-  bottom: 50%;
-  width: 300px;
+  bottom: 50%;  
+  right: 0;
+  width: 100%;
 
-
+/* 
   & div {
     position: absolute;
     margin: auto;
@@ -116,31 +161,32 @@ export const Container = styled.form`
     right: 0;
     bottom: 0;
     left: 0;
-    width: 70px;
-    height: 70px;
-    background: rgb(220, 20, 60);
+    width: 50px;
+    height: 50px;
+    background-color: ${p => p.theme.color.bgBtnSearch};
     border-radius: 50%;
     transition: all 1s;
     z-index: 4;
-    box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.4);
-    // box-shadow: 0 0 25px 0 crimson;
+
     &:hover {
       cursor: pointer;
     }
+
     &::before {
       content: "";
       position: absolute;
       margin: auto;
-      top: 24px;
+      top: 18px;
       right: 0;
       bottom: 0;
-      left: 24px;
-      width: 12px;
+      left: 18px;
+      width: 10px;
       height: 3px;
-      background-color: white;
+      background-color: ${p => p.theme.color.textPrimary};
       transform: rotate(45deg);
-      transition: all .5s;
+      transition: all 0.5s;
     }
+
     &::after {
       content: "";
       position: absolute;
@@ -149,51 +195,49 @@ export const Container = styled.form`
       right: 0;
       bottom: 0;
       left: -5px;
-      width: 25px;
-      height: 25px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      border: 3px solid #ffffff;
+      border: 3px solid ${p => p.theme.color.textPrimary};
       transition: all 0.5s;
     }
   }
-  input {
-    
+  input {    
     position: absolute;
-    margin: auto;
-    margin-right: 5px;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    width: 50px;
-    height: 50px;
+    width: 40px; 
+    height: 40px;
+    margin: auto;
+    margin-right: 5px;
+    padding: 0 50px 0 10px;
     outline: none;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgb(220, 20, 60);
-    color: white;
-    text-shadow: 0 0 10px crimson;
-    padding: 0 80px 0 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 25px 0 crimson,
-                0 20px 25px 0 rgba(0, 0, 0, 0.2);
-  
-    transition: all 1s;
+    border: none;   
+    border-radius: 10px;  
+    font-size: ${p => p.theme.fs.s};
+    font-weight: ${p => p.theme.fw.bold};    
+    color: ${p => p.theme.color.textSecondary};
+    background-color: ${p => p.theme.color.bgInputSearch};
     opacity: 0;
     z-index: 5;
-    font-weight: bolder;    
+    transition: all 1s;
+
     &:hover {
       cursor: pointer;
     }
+
     &:focus {
-      width: 300px;
+      width: calc(100% - 5px);
       opacity: 1;
       cursor: text;
     }
+
     &:focus ~ div {
-      /* right: -250px; */
-      background: #151515;
+      background-color: ${p => p.theme.color.bgBtnClose};
       z-index: 6;
+
       &::before {
         top: 0;
         left: 0;
@@ -205,15 +249,127 @@ export const Container = styled.form`
         width: 25px;
         height: 3px;
         border: none;
-        background: white;
+        background-color: ${p => p.theme.color.textPrimary};
         border-radius: 0%;
         transform: rotate(-45deg);
       }
     }
     &::placeholder {
-      color: white;
+      color: ${p => p.theme.color.textPrimary};
+      font-size: ${p => p.theme.fs.s};
+      font-weight: ${p => p.theme.fw.bold};
       opacity: 0.5;
-      font-weight: bolder;
+    }
+  } */
+`;
+
+export const Btn = styled.div<{ theme: ITheme }>`
+  position: absolute;
+  margin: auto;
+  margin-right: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  background-color: ${p => p.theme.color.bgBtnSearch};
+  border-radius: 50%;
+  transition: all 1s;
+  z-index: 4;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: 18px;
+    right: 0;
+    bottom: 0;
+    left: 18px;
+    width: 10px;
+    height: 3px;
+    background-color: ${p => p.theme.color.textPrimary};
+    transform: rotate(45deg);
+    transition: all 0.5s;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: -5px;
+    right: 0;
+    bottom: 0;
+    left: -5px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 3px solid ${p => p.theme.color.textPrimary};
+    transition: all 0.5s;
+  }
+`;
+
+export const Input = styled.input<{ theme: ITheme }>`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  margin: auto;
+  margin-right: 5px;
+  padding: 0 50px 0 10px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: ${p => p.theme.fs.s};
+  font-weight: ${p => p.theme.fw.bold};
+  color: ${p => p.theme.color.textSecondary};
+  background-color: ${p => p.theme.color.bgInputSearch};
+  opacity: 0;
+  z-index: 5;
+  transition: all 1s;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:focus {
+    width: calc(100% - 5px);
+    opacity: 1;
+    cursor: text;
+  }
+
+  &:focus ~ div {
+    background-color: ${p => p.theme.color.bgBtnClose};
+    z-index: 6;
+
+    &::before {
+      top: 0;
+      left: 0;
+      width: 25px;
+    }
+    &::after {
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 3px;
+      border: none;
+      background-color: ${p => p.theme.color.textPrimary};
+      border-radius: 0%;
+      transform: rotate(-45deg);
     }
   }
-`
+
+  &::placeholder {
+    color: ${p => p.theme.color.textPrimary};
+    font-size: ${p => p.theme.fs.s};
+    font-weight: ${p => p.theme.fw.bold};
+    opacity: 0.5;
+  }
+`;

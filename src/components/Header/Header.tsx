@@ -1,4 +1,4 @@
-import { Logo, Wrapper, Line, Text, Container } from './Header.styled';
+import { Wrapper, Location, Name, Line, Form, Details, Content, Input, Btn } from './Header.styled';
 import { ITheme, cityType } from 'types';
 import { useTheme } from '@emotion/react';
 import { ChangeEvent, FormEvent } from 'react';
@@ -10,40 +10,47 @@ type Props = {
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
 }
 
-
 const Header = ({city, term, handleInputChange, handleSubmit}: Props) => {
   const theme = useTheme() as ITheme;
+  let cityName: string = '';
+  let cityDetails: string[] = [city.country];
+
+  if (city && city?.local_names && city.local_names?.uk) {
+    cityName = city.local_names.uk;
+  } else {
+    cityName = city.name;
+  }
+
+  if (city && city?.state) {
+    cityDetails.unshift(city.state);
+  }
 
   return (
     <Wrapper theme={theme}>
 
-      <Logo theme={theme}>
-        <Text theme={theme}>
-          Погодний Навігатор
-        </Text>
-        <Line/>
-      </Logo>
+      <Content>
+        <Location theme={theme}>
+        <Name theme={theme}>
+          {cityName}
+        </Name>
+        <Details theme={theme}>
+          {cityDetails.join(' ')}
+        </Details>
+      </Location>
 
-      {/* <form onSubmit={handleSubmit}>
-          
-        <input
-          type="text"
-          value={term}
-          onChange={handleInputChange}
-          placeholder="Назва населеного пункту"
+      <Form
+        theme={theme}
+        onSubmit={handleSubmit}>
+        <Input theme={theme}
+        type="text"
+        value={term}
+        onChange={handleInputChange}
+        placeholder="Назва населеного пункту"
         />
-        <button type="submit" style={{ color: "black" }}>Search</button>
-      </form> */}
-
-      <Container onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={term}
-          onChange={handleInputChange}
-          placeholder="Назва населеного пункту"
-        />
-  <div ></div>
-</Container>
+        <Btn theme={theme}/>
+      </Form>
+      </Content>
+      <Line theme={theme} />
     </Wrapper>
   );
 };
