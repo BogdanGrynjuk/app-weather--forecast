@@ -31,35 +31,28 @@ const App: React.FC = () => {
   return (
     <>
       {!city && <Loader />}
-      <Layout>
-     
-        {city && forecast &&
-          <>
-            <Header
-              city={city}
+      <Layout>     
+        {city &&         
+          <Header
+            city={city}
             term={term}
             options={options}
-              handleInputChange={handleInputChange}
+            handleInputChange={handleInputChange}
             handleSubmit={handleSubmit}
             handleOptionSelect={handleOptionSelect}
-            />
-            <div>
-              погода
-            </div>
+          />
+        }
+
+        {forecast &&
+          <>
+            <div>Погода</div>
             <div>
               <span>{forecast.list[0].weather[0].description}</span>
               <span> {Math.round(forecast.list[0].main.temp)}<sup>o</sup></span>
             </div>
-        
-          </>
-             
+          </>             
         }
-      
-       
-          
-
         
-       
         <div style={{ backgroundColor: ' rgba(66, 54, 54, 0.5)' }}>
           <div style={{ display: 'flex' }}>
             <WeatherSvg state="sunny" width={50} height={50} />
@@ -78,15 +71,11 @@ const App: React.FC = () => {
             <WeatherSvg state="sunny" width={50} height={50} />
           </div>
           <p style={{ color: "white", textAlign: "center" }}>Weather icons</p>
-        </div>
-      
-        
-        
+        </div>        
      
         <div style={{ marginTop: 40, textAlign: "center" }}>
           <Feels /> <Humidity /> <Pop /> <Pressure /> <Sunrise /> <Sunset /> <Visibility /> <Wind />
           <p style={{ color: "white", textAlign: "center" }}>Additional icons</p>
-
         </div>
       </Layout>
     </>

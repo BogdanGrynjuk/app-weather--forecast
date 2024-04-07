@@ -12,6 +12,8 @@ export const theme: ITheme = Object.freeze({
     // Основні кольори фону
     bgDark: 'rgba(33, 34, 39, 0.5)',
     bgLight: 'rgba(255, 255, 255, 0.5)',
+    bgLoader: 'rgba(33, 34, 39, 0.8)',
+    bgDropdownOptions: 'rgba(33, 34, 39, 0.8)',
     bgBtnSearch: 'rgba(220, 20, 60, 1)',
     bgBtnClose: 'rgba(33, 34, 39, 1)',
     bgInputSearch: 'rgba(220, 20, 60, 1)',

@@ -269,35 +269,3 @@ export const Input = styled.input<{ theme: ITheme }>`
   }
 `;
 
-export const DropdownOptions = styled.ul`
-  position: absolute;
-  top: 0;  
-  left: 0;  
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  border-radius: 10px;
-
-  padding: 70px 10px 10px;
-  
-   & li {
-    
-
-    & button {
-      text-align: left;
-      width: 100%;
-      overflow: hidden;
-      background-color: transparent;         
-      color: rgba(168, 203, 255, 1);
-      font-size: 18px;
-      font-weight: bold;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-
-      &:hover{        
-        color: rgba(255, 255, 255, 1);
-      }
-    }
-   }
-  
-`

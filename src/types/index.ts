@@ -4,10 +4,11 @@ export interface ITheme extends Theme {
   color: {
     textPrimaryLight: string;
     textPrimaryDark: string;
-    textSecondary: string;
-    
+    textSecondary: string;    
     bgDark: string;
     bgLight: string;
+    bgLoader: string;
+    bgDropdownOptions: string;
     bgBtnSearch: string;
     bgBtnClose: string;
     bgInputSearch: string;

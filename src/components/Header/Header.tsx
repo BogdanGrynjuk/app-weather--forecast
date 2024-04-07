@@ -1,8 +1,9 @@
 import React from 'react'
-import { Wrapper, Location, Name, Line, Form, Details, Content, Input, Btn, DropdownOptions } from './Header.styled';
+import { Wrapper, Location, Name, Line, Form, Details, Content, Input, Btn } from './Header.styled';
 import { ITheme, cityType } from 'types';
 import { useTheme } from '@emotion/react';
 import { ChangeEvent, FormEvent } from 'react';
+import DropdownOptions from 'components/DropdownOptions';
 
 type Props = {
   city: cityType
@@ -62,17 +63,10 @@ const Header: React.FC<Props> = (
       
       <Line theme={theme} />
       {options.length > 0 && term &&
-        <DropdownOptions>
-          {options.map((option: cityType, index: number) => (
-            <li key={`option.name-${index}`}>
-              <button               
-                onClick={() => handleOptionSelect(option)}
-              >
-                {option?.local_names?.uk}  {option.name},  {option.country}, {option.state}
-              </button>
-            </li>
-          ))}
-        </DropdownOptions>
+        <DropdownOptions
+          options={options}
+          handleOptionSelect={handleOptionSelect}
+        />
       }
 
      
