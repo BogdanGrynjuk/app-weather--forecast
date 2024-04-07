@@ -1,13 +1,15 @@
 import React from 'react'
-import { LoadInner, LoadLoader } from './Loader.styled'
+import { BgLoader, LoadInner, LoadLoader } from './Loader.styled'
 
-const Loader: React.FC = () => {
+const Loader: React.FC = () => {  
   return (
-    <LoadLoader>
-      <LoadInner className='load-one' />
-      <LoadInner className='load-two' />
-      <LoadInner className='load-three' />
-    </LoadLoader>
+    <BgLoader>
+      <LoadLoader>
+        <LoadInner className='load-one' />
+        <LoadInner className='load-two' />
+        <LoadInner className='load-three' />
+      </LoadLoader>
+    </BgLoader>
   );
 }
 

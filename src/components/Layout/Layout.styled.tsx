@@ -13,18 +13,18 @@ export const Content = styled.div<{ theme: ITheme }>`
   margin: 0 auto;  
   padding: 10px;  
   width: 100%;
-  max-width: 320px;
+  width: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   
   @media screen and (${ p => p.theme.mq.tablet }) {
     padding: 20px;
-    max-width: 834px;    
+    width: 768px;    
   }
 
   @media screen and (${ p => p.theme.mq.desktop }) {
-    max-width: 1440px;    
+    width: 1280px;    
   }
 `;
 

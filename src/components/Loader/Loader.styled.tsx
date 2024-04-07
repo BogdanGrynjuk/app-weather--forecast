@@ -28,6 +28,14 @@ export const rotateThree = keyframes`
 	}
 `;
 
+export const BgLoader = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(33, 34, 39, 1);
+`;
 export const LoadLoader = styled.div`
   position: relative;
   width: 100px;

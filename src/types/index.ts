@@ -2,11 +2,12 @@ import { Theme } from '@emotion/react';
 
 export interface ITheme extends Theme {
   color: {
-    textPrimary: string;
+    textPrimaryLight: string;
+    textPrimaryDark: string;
     textSecondary: string;
     
-    bgPrimary: string;
-    bgSecondary: string;
+    bgDark: string;
+    bgLight: string;
     bgBtnSearch: string;
     bgBtnClose: string;
     bgInputSearch: string;
