@@ -12,7 +12,6 @@ import Wind from "components/Icons/Wind";
 
 import useWeatherForecast from "hooks/useWeatherForecast";
 
-import { cityType } from "./types/index";
 import Layout from "components/Layout";
 import Header from "components/Header";
 
