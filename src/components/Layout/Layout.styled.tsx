@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ITheme } from 'types';
+
 
 export const VideoBG = styled.video`
   position: absolute;
@@ -9,7 +9,7 @@ export const VideoBG = styled.video`
   z-index: -1;  
 `;
 
-export const Content = styled.div<{ theme: ITheme }>`
+export const Content = styled.div`
   margin: 0 auto;  
   padding: 10px;  
   width: 100%;

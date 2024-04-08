@@ -65,6 +65,6 @@ export const LoadInner = styled.div`
     right: 0%;
     bottom: 0%;
     animation: ${rotateThree} 1.15s linear infinite;
-    border-top: 3px solid rgba(233, 144, 138, 1);
+    border-top: 3px solid rgba(220, 20, 60, 1);
   }
 `;

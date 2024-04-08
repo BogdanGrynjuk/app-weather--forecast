@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 
-import { ITheme } from 'types';
 
-export const List = styled.ul<{theme: ITheme}>`
+export const List = styled.ul`
   position: absolute;
   top: 0;  
   left: 0;  
@@ -12,8 +11,8 @@ export const List = styled.ul<{theme: ITheme}>`
   padding: 70px 10px 10px;  
 `;
 
-export const Item = styled.li<{theme: ITheme}>`
-  &:not(:first-child)::before {
+export const Item = styled.li`
+  &:not(:first-of-type)::before {
     display: block;
     content: '';
     width: 100%;
@@ -23,7 +22,7 @@ export const Item = styled.li<{theme: ITheme}>`
   }  
 `;
 
-export const Btn = styled.button<{ theme: ITheme }>`
+export const Btn = styled.button`
   width: 100%;
   overflow: hidden;
   text-align: left;

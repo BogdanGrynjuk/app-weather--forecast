@@ -1,9 +1,11 @@
 import React from 'react'
-import { Wrapper, Location, Name, Line, Form, Details, Content, Input, Btn } from './Header.styled';
-import { ITheme, cityType } from 'types';
-import { useTheme } from '@emotion/react';
+import { Wrapper, Content } from './Header.styled';
+import { cityType } from 'types';
 import { ChangeEvent, FormEvent } from 'react';
-import DropdownOptions from 'components/DropdownOptions';
+import DropdownOptions from 'components/Header/DropdownOptions';
+import Location from './Location';
+import Search from './Search';
+import DecorationStripe from './DecorationStripe';
 
 type Props = {
   city: cityType
@@ -15,53 +17,27 @@ type Props = {
 }
 
 const Header: React.FC<Props> = (
-  { city, term, options, handleInputChange, handleSubmit, handleOptionSelect }) => {
-  const theme = useTheme() as ITheme;
-  let cityName: string = '';
-  let cityDetails: string[] = [city.country];
-
-  if (city && city?.local_names && city.local_names?.uk) {
-    cityName = city.local_names.uk;
-  } else {
-    cityName = city.name;
-  }
-
-  if (city && city?.state) {
-    cityDetails.unshift(city.state);
-  }
+  { city,
+    term,
+    options,
+    handleInputChange,
+    handleSubmit,
+    handleOptionSelect
+  }) => {  
 
   return (
-    <Wrapper theme={theme}>
-
+    <Wrapper>
       <Content>
-        <Location theme={theme}>
-          <Name theme={theme}>
-            {cityName}
-          </Name>
-          <Details theme={theme}>
-            {cityDetails.join(' ')}
-          </Details>
-        </Location>
-
-        <Form
-          theme={theme}
-          onSubmit={handleSubmit}>
-          <Input theme={theme}
-            type="text"
-            value={term}
-            onChange={handleInputChange}
-            placeholder="Назва населеного пункту"
-          />
-          <Btn theme={theme} />
-        </Form>
-         
-
-        
-
-       
+        <Location city={city} />
+        <Search
+          term={term}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+        />
       </Content>
       
-      <Line theme={theme} />
+      <DecorationStripe />
+      
       {options.length > 0 && term &&
         <DropdownOptions
           options={options}

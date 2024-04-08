@@ -1,8 +1,8 @@
-import { ITheme } from "types";
+import { Theme } from "@emotion/react";
 
 const breakpoints: [string, string, string] = ['320px', '768px', '1280px'];
 
-export const theme: ITheme = Object.freeze({
+export const theme: Theme = Object.freeze({
   color: {
     // Основні
     textPrimaryLight: 'rgba(255, 255, 255, 1)', // Текст на темному фоні
@@ -11,8 +11,7 @@ export const theme: ITheme = Object.freeze({
 
     // Основні кольори фону
     bgDark: 'rgba(33, 34, 39, 0.5)',
-    bgLight: 'rgba(255, 255, 255, 0.5)',
-    bgLoader: 'rgba(33, 34, 39, 0.8)',
+    bgLight: 'rgba(255, 255, 255, 0.5)',   
     bgDropdownOptions: 'rgba(33, 34, 39, 0.8)',
     bgBtnSearch: 'rgba(220, 20, 60, 1)',
     bgBtnClose: 'rgba(33, 34, 39, 1)',

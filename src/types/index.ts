@@ -1,38 +1,39 @@
-import { Theme } from '@emotion/react';
+import '@emotion/react';
 
-export interface ITheme extends Theme {
-  color: {
-    textPrimaryLight: string;
-    textPrimaryDark: string;
-    textSecondary: string;    
-    bgDark: string;
-    bgLight: string;
-    bgLoader: string;
-    bgDropdownOptions: string;
-    bgBtnSearch: string;
-    bgBtnClose: string;
-    bgInputSearch: string;
+declare module '@emotion/react' {
+  export interface Theme {
+    color: {
+      textPrimaryLight: string;
+      textPrimaryDark: string;
+      textSecondary: string;
+      bgDark: string;
+      bgLight: string;      
+      bgDropdownOptions: string;
+      bgBtnSearch: string;
+      bgBtnClose: string;
+      bgInputSearch: string;
 
-  };
-  ff: {
-    inconsolata: string;
-  };
-  fw: {
-    regular: number;
-    semiBold: number;
-    bold: number;
-  };
-  fs: {
-    s: string;
-    m: string;
-    l: string;
-    xl: string;   
-  };
-  mq: {
-    mobile: string;
-    tablet: string;
-    desktop: string;
-  };
+    };
+    ff: {
+      inconsolata: string;
+    };
+    fw: {
+      regular: number;
+      semiBold: number;
+      bold: number;
+    };
+    fs: {
+      s: string;
+      m: string;
+      l: string;
+      xl: string;
+    };
+    mq: {
+      mobile: string;
+      tablet: string;
+      desktop: string;
+    };
+  }
 };
 
 export type weatherForecastType = {

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Btn, Item, List } from './DropdownOptions.styled';
 
-import { ITheme, cityType } from 'types';
-import { useTheme } from '@emotion/react';
+import { cityType } from 'types';
 
 type Props = {  
   options: [] 
@@ -10,9 +9,9 @@ type Props = {
 }
 
 const DropdownOptions: React.FC<Props> = ({ options, handleOptionSelect }) => {
-  const theme = useTheme() as ITheme;
+  
   return (
-    <List theme={theme}>
+    <List>
       {options.map((option: cityType, index: number) => {
         const optionName = (option.local_names && option.local_names.uk) ? option.local_names.uk : option.name;
         const optionArray: string[] = [
@@ -21,11 +20,10 @@ const DropdownOptions: React.FC<Props> = ({ options, handleOptionSelect }) => {
           option.state || ''
         ].filter(Boolean);
         return (
-          <Item theme={theme}
+          <Item
             key={`option.name-${index}`}>
             <Btn
-              type="button"
-              theme={theme}
+              type="button"              
               onClick={() => handleOptionSelect(option)}
             >
               {optionArray.join(", ")}
