@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Wrapper, Content } from './Header.styled';
 import { cityType } from 'types';
 import { ChangeEvent, FormEvent } from 'react';
@@ -14,6 +14,7 @@ type Props = {
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void
   handleOptionSelect: (option: cityType) => void
+  handleClearOptionSelect: () => void
 }
 
 const Header: React.FC<Props> = (
@@ -22,17 +23,29 @@ const Header: React.FC<Props> = (
     options,
     handleInputChange,
     handleSubmit,
-    handleOptionSelect
-  }) => {  
+    handleOptionSelect,
+    handleClearOptionSelect
+  }) => { 
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+
+  const handleFocus = () => {
+    setIsVisible(false);
+  };
+  const handleBlur = () => {
+    setIsVisible(true);
+  };
 
   return (
     <Wrapper>
       <Content>
-        <Location city={city} />
+        <Location isVisible={isVisible} city={city} />
         <Search
           term={term}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
+          handleClearOptionSelect={handleClearOptionSelect}
+          handleFocus={handleFocus}
+          handleBlur={handleBlur}
         />
       </Content>
       
@@ -42,10 +55,9 @@ const Header: React.FC<Props> = (
         <DropdownOptions
           options={options}
           handleOptionSelect={handleOptionSelect}
+          handleClearOptionSelect={handleClearOptionSelect}
         />
       }
-
-     
        
     </Wrapper>
   );

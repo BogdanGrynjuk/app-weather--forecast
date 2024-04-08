@@ -4,9 +4,10 @@ import { Wrapper, Settlement, Region } from './Location.styled';
 
 type Props = {
   city: cityType
+  isVisible: boolean
 }
 
-const Location: React.FC<Props> = ({city}) => {
+const Location: React.FC<Props> = ({city, isVisible}) => {
   let cityName: string = '';
   let cityDetails: string[] = [city.country];
 
@@ -20,7 +21,7 @@ const Location: React.FC<Props> = ({city}) => {
     cityDetails.unshift(city.state);
   }
   return (
-    <Wrapper>
+    <Wrapper isVisible={isVisible}>
       <Settlement>
         {cityName}
       </Settlement>

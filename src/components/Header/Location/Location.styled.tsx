@@ -1,8 +1,13 @@
 import styled from '@emotion/styled';
 
-export const Wrapper = styled.div`
-  position: relative;
-  width: calc(100% - 50px - 10px);  
+type Props = {
+  isVisible: boolean;
+}
+
+export const Wrapper = styled.div<Props>`  
+  width: calc(100% - 50px - 10px);
+  opacity: ${p => p.isVisible ? 1 : 0};
+  transition: opacity 0.5s ease;  
 `;
 
 export const Settlement = styled.h1` 

@@ -25,6 +25,7 @@ const App: React.FC = () => {
     options,
     handleInputChange,
     handleOptionSelect,
+    handleClearOptionSelect,
     handleSubmit
   } = useWeatherForecast();
 
@@ -40,6 +41,7 @@ const App: React.FC = () => {
             handleInputChange={handleInputChange}
             handleSubmit={handleSubmit}
             handleOptionSelect={handleOptionSelect}
+            handleClearOptionSelect={handleClearOptionSelect}
           />
         }
 

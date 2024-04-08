@@ -107,9 +107,13 @@ const useWeatherForecast = () => {
   const handleOptionSelect = (option: cityType) => {    
     getWeatherForecast(option.lat, option.lon);
     setCity(option);
+    handleClearOptionSelect();
+  };
+
+  const handleClearOptionSelect = () => {
     setTerm("");
     setOptions([]);
-  };
+  }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (!term) return;
@@ -154,6 +158,7 @@ useEffect(() => {
     options,
     handleInputChange,
     handleOptionSelect,
+    handleClearOptionSelect,
     handleSubmit
   };
 };
