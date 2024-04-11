@@ -29,12 +29,16 @@ export const rotateThree = keyframes`
 `;
 
 export const BgLoader = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(33, 34, 39, 1);
+  background-color: rgba(33, 34, 39, 0.8);
+  z-index: 1000;
 `;
 export const LoadLoader = styled.div`
   position: relative;

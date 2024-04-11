@@ -1,8 +1,6 @@
 import { FormEvent, ChangeEvent, useCallback, useEffect, useState } from "react";
-
-import debounce from 'lodash/debounce'
+import debounce from 'lodash/debounce';
 import axios from "axios";
-
 import { weatherForecastType, cityType } from "../types";
 
 const useWeatherForecast = () => {
@@ -11,7 +9,13 @@ const useWeatherForecast = () => {
   const [city, setCity] = useState<cityType | null>(null);  
   const [term, setTerm] = useState<string>('');
   const [forecast, setForecast] = useState<weatherForecastType | null>(null);
-  const [options, setOptions] = useState<[]>([]); 
+  const [options, setOptions] = useState<[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isCoordinatesLoaded, setIsCoordinatesLoaded] = useState<boolean>(false);
+  const [isLocationLoaded, setIsLocationLoaded] = useState<boolean>(false);
+  const [isForecastLoaded, setIsForecastLoaded] = useState<boolean>(false);
+  const [initialLoadComplete, setInitialLoadComplete] = useState<boolean>(false);
 
   const IPINFO_TOKEN = "805536fa8da0c5";
   const OPENWEATHER_API_KEY = "ece85ccbe9bef82868f04d46c0d82058";
@@ -20,6 +24,8 @@ const useWeatherForecast = () => {
   const DEBOUNCE_DELAY = 300;
   
   const getCoordinates = async () => {
+    setErrorMessage("");
+
     try {
       const response = await axios.get(`https://ipinfo.io/json?token=${IPINFO_TOKEN}`)
       const data = response.data;
@@ -27,11 +33,17 @@ const useWeatherForecast = () => {
       setLatitude(Number(latitude));
       setLongitude(Number(longitude));
     } catch (error) {
-      console.error("Error fetching coordinates ", error);
+      console.error("Error fetching coordinates: ", error);
+      setErrorMessage("Не можливо отримати Ваші координати. Будь ласка введіть назву населеного пункту у поле пошуку");
+      setIsLoading(false);
+    } finally {
+      setIsCoordinatesLoaded(true);
     }
   };
 
   const getLocationByCoordinates = async (latitude: number | null, longitude: number | null) => {
+    setErrorMessage("");
+    
     try {
       const response = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${OPENWEATHER_API_KEY}`);
       const data = response.data;
@@ -41,11 +53,17 @@ const useWeatherForecast = () => {
       }
       
     } catch (error) {
-      console.error("Error fetching geolocation data ", error);
+      console.error("Error fetching geolocation data: ", error);
+      setErrorMessage("Не можливо отримати Вашу геолокацію. Будь ласка введіть назву населеного пункту у поле пошуку");
+      setIsLoading(false);
+    } finally {
+      setIsLocationLoaded(true);
     }
   };
 
   const getLocationByCityName = async (cityName: string) => {
+    setErrorMessage("");
+
     try {
       const response = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0//direct?q=${cityName}&limit=5&appid=${OPENWEATHER_API_KEY}`);
       const data = response.data;
@@ -57,24 +75,33 @@ const useWeatherForecast = () => {
           setCity(newCity);
         }
       } else {
-        console.log(`Погоди по цьому пункту (${cityName}), на жаль, на сайті немає`);
+        setErrorMessage(`Погоди по цьому пункту (${cityName}), на жаль, на сайті немає`);
       }
     } catch (error) {
-      console.error("Error fetching geolocation data ", error);
+      console.error("Error fetching geolocation data: ", error);
+      setErrorMessage("Під час отримання даних геолокації сталася помилка. Спробуйте надіслати запит пізніше");
+      setIsLoading(false);
+    } finally {
+      setIsLocationLoaded(true);
     }
   };
 
   const getSearchOptions = async (term: string) => {
+    setErrorMessage("");
+
     try {
       const responce = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0/direct?q=${term.trim()}&limit=10&appid=${OPENWEATHER_API_KEY}`);
       const data = responce.data;
       setOptions(data);
     } catch (error) {
       console.error("Error fetching search options ", error);
+      setErrorMessage("Під час отримання даних сталася помилка. Спробуйте ще раз");      
     }
   };
 
   const getWeatherForecast = async (latitude: number, longitude: number) => {
+    setErrorMessage("");
+
     try {
       const response = await axios.get(`${URL_OPENWEATHER_API}/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&lang=ua&appid=${OPENWEATHER_API_KEY}`);
       const data = response.data;      
@@ -85,6 +112,10 @@ const useWeatherForecast = () => {
       setForecast(forecastData);
     } catch (error) {
       console.error("Error fetching weather forecast ", error);
+      setErrorMessage("Під час отримання даних сталася помилка. Спробуйте ще раз");
+      setIsLoading(false);
+    } finally {
+      setIsForecastLoaded(true);
     }
   };
 
@@ -123,25 +154,13 @@ const useWeatherForecast = () => {
     setOptions([]);
   };
 
-useEffect(() => {
-  const getLocation = async () => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-      });
-    } else {
-      await getCoordinates();
-    }
-  };
-
-  getLocation();
-}, []);
+  useEffect(() => {
+    getCoordinates();
+  }, []);
   
   useEffect(() => {
     if (latitude !== null && longitude !== null) {
       getLocationByCoordinates(latitude, longitude);
-      getWeatherForecast(latitude, longitude);
     }
   }, [latitude, longitude]);
 
@@ -149,13 +168,23 @@ useEffect(() => {
     if (city !== null) {
       getWeatherForecast(city.lat, city.lon);
     }
-   }, [city]);
+  }, [city]);
+
+  useEffect(() => {
+    if (isCoordinatesLoaded && isLocationLoaded && isForecastLoaded && !initialLoadComplete) {
+      setIsLoading(false);
+      setInitialLoadComplete(true);
+    }
+  }, [isCoordinatesLoaded, isLocationLoaded, isForecastLoaded, initialLoadComplete]);
+ 
 
   return {
     city,    
     term,
     forecast,
     options,
+    isLoading,
+    errorMessage,
     handleInputChange,
     handleOptionSelect,
     handleClearOptionSelect,

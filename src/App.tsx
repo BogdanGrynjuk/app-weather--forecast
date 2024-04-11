@@ -1,6 +1,5 @@
 import React from "react";
 import { WeatherSvg } from "weather-icons-animated";
-import Loader from "./components/Loader";
 import Feels from "components/Icons/Feels";
 import Humidity from "components/Icons/Humidity";
 import Pop from "components/Icons/Pop";
@@ -14,6 +13,7 @@ import useWeatherForecast from "hooks/useWeatherForecast";
 
 import Layout from "components/Layout";
 import Header from "components/Header";
+import Loader from "components/Loader";
 
 
 const App: React.FC = () => { 
@@ -23,6 +23,8 @@ const App: React.FC = () => {
     term,
     forecast,
     options,
+    isLoading,
+    errorMessage,
     handleInputChange,
     handleOptionSelect,
     handleClearOptionSelect,
@@ -31,9 +33,12 @@ const App: React.FC = () => {
 
   return (
     <>
-      {!city && <Loader />}
-      <Layout>     
-        {city &&         
+      
+      
+      <Layout>
+        {isLoading && <Loader />}
+        {errorMessage && <p>{errorMessage}</p>}
+        {!isLoading && city &&         
           <Header
             city={city}
             term={term}
@@ -45,7 +50,7 @@ const App: React.FC = () => {
           />
         }
 
-        {forecast &&
+        {!isLoading && forecast &&
           <>
             <div>Погода</div>
             <div>
