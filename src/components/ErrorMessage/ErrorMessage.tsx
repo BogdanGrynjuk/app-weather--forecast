@@ -1,16 +1,24 @@
 import React from 'react';
-import { TextMessage } from './ErrorMessage.styled';
+import { ActionMessage, MainMessage, Wrapper } from './ErrorMessage.styled';
+import { IError } from 'types';
 
 type Props = {
-  children: React.ReactNode
-  isVisible: boolean
-}
+  error: IError   
+  isVisible?: boolean
+  isLight?: boolean
+};
 
-const ErrorMessage: React.FC<Props> = ({children, isVisible}) => {
+const ErrorMessage: React.FC<Props> = ({ error, isVisible, isLight }) => {
+  const { errorMessage, actionMessage } = error;
   return (
-    <TextMessage isVisible={isVisible}>
-      {children}
-    </TextMessage>
+    <Wrapper isVisible={isVisible ?? true}>
+      <MainMessage>
+        {errorMessage}
+      </MainMessage>
+      <ActionMessage isLight={isLight ?? false}>
+        {actionMessage}
+      </ActionMessage>    
+    </Wrapper>
   );
 }
 

@@ -36,12 +36,17 @@ const Header: React.FC<Props> = (
     setIsVisible(true);
   };
 
+  const customError = {
+    errorMessage: "Локацію не знайдено",
+    actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
+  }
+
   return (
     <Wrapper>
       <Content>
         {city 
           ? <Location isVisible={isVisible} city={city} />
-          : <ErrorMessage isVisible={isVisible}>Локацію не знайдено</ErrorMessage>
+          : <ErrorMessage isLight isVisible={isVisible} error={customError}/>
         }
         <Search
           term={term}

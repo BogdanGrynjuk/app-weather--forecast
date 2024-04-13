@@ -91,3 +91,8 @@ export type optionType = {
   state: string
 };
 
+export interface IError {
+    errorMessage: string;
+    actionMessage: string;
+};
+

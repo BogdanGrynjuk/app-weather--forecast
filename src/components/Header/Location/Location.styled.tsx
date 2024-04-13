@@ -10,7 +10,7 @@ export const Wrapper = styled.div<Props>`
   transition: opacity 0.5s ease;  
 `;
 
-export const Settlement = styled.h1` 
+export const Settlement = styled.h2` 
   font-size: ${p => p.theme.fs.l};
   font-weight: ${p => p.theme.fw.semiBold};
   color: ${p => p.theme.color.textPrimaryLight};

@@ -1,7 +1,7 @@
 import { FormEvent, ChangeEvent, useCallback, useEffect, useState } from "react";
 import debounce from 'lodash/debounce';
 import axios from "axios";
-import { weatherForecastType, cityType } from "../types";
+import { weatherForecastType, cityType, IError } from "../types";
 
 const useWeatherForecast = () => {
   const [latitude, setLatitude] = useState<number | null>(null);
@@ -11,7 +11,7 @@ const useWeatherForecast = () => {
   const [forecast, setForecast] = useState<weatherForecastType | null>(null);
   const [options, setOptions] = useState<[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [error, setError] = useState<IError | null>(null);
   const [isCoordinatesLoaded, setIsCoordinatesLoaded] = useState<boolean>(false);
   const [isLocationLoaded, setIsLocationLoaded] = useState<boolean>(false);
   const [isForecastLoaded, setIsForecastLoaded] = useState<boolean>(false);
@@ -27,10 +27,10 @@ const useWeatherForecast = () => {
       latitude: number;
       longitude: number;
     };
-  }; 
-
+  };  
+  
   const getCoordinatesByGeolocationAPI = useCallback(async () => {
-    setErrorMessage("");
+    setError(null);
     try {    
       const permissionStatus = await navigator.permissions?.query({ name: 'geolocation' });
       if (permissionStatus?.state === 'granted') {
@@ -41,19 +41,25 @@ const useWeatherForecast = () => {
         setLongitude(position.coords.longitude);
       } else {
         console.error('Geolocation permission not granted');
-        setErrorMessage("Оскільки дозвіл на отрмання геолокації не дозволено, будь ласка введіть назву населеного пункту у поле пошуку");
+        setError({
+          errorMessage: "Ваш браузер блокує дозвіл на отрмання поточної геолокації",
+          actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
+        });
         setIsLoading(false);
       }    
     } catch (error) {
       console.error("Error fetching geolocation: ", error);
-      setErrorMessage("Не можливо отримати Ваші координати. Будь ласка введіть назву населеного пункту у поле пошуку");
+      setError({
+          errorMessage: "Не можливо отримати Ваші координати",
+          actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
+        })        
     } finally {
       setIsCoordinatesLoaded(true);
     }
   }, []);
 
   const getLocationByCoordinates = async (latitude: number | null, longitude: number | null) => {
-    setErrorMessage("");
+    setError(null);
     
     try {
       const response = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${KEY_OPENWEATHER_API}`);
@@ -65,7 +71,10 @@ const useWeatherForecast = () => {
       
     } catch (error) {
       console.error("Error fetching geolocation data: ", error);
-      setErrorMessage("Не можливо отримати Вашу геолокацію. Будь ласка введіть назву населеного пункту у поле пошуку");
+      setError({
+          errorMessage: "Не можливо отримати Вашу геолокацію",
+          actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
+        })        
       setIsLoading(false);
     } finally {
       setIsLocationLoaded(true);
@@ -73,7 +82,7 @@ const useWeatherForecast = () => {
   };
 
   const getLocationByCityName = async (cityName: string) => {
-    setErrorMessage("");
+    setError(null);
 
     try {
       const response = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0//direct?q=${cityName}&limit=5&appid=${KEY_OPENWEATHER_API}`);
@@ -88,11 +97,17 @@ const useWeatherForecast = () => {
       } else {
         setCity(null);
         setForecast(null);
-        setErrorMessage(`Погоди по цьому пункту (${cityName}), на жаль, на сайті немає`);
+        setError({
+          errorMessage: `Погоди по цьому пункту (${cityName}), на жаль, на сайті немає`,
+          actionMessage: "Будь ласка введіть іншу назву населеного пункту у поле пошуку"
+        })
       }
     } catch (error) {
       console.error("Error fetching geolocation data: ", error);
-      setErrorMessage("Під час отримання даних геолокації сталася помилка. Спробуйте надіслати запит пізніше");
+      setError({
+          errorMessage: "Під час отримання даних геолокації сталася помилка",
+          actionMessage: "Будь ласка спробуйте надіслати запит пізніше"
+        });
       setIsLoading(false);
     } finally {
       setIsLocationLoaded(true);
@@ -100,7 +115,7 @@ const useWeatherForecast = () => {
   };
 
   const getSearchOptions = async (term: string) => {
-    setErrorMessage("");
+    setError(null);
 
     try {
       const responce = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0/direct?q=${term.trim()}&limit=10&appid=${KEY_OPENWEATHER_API}`);
@@ -108,12 +123,15 @@ const useWeatherForecast = () => {
       setOptions(data);
     } catch (error) {
       console.error("Error fetching search options ", error);
-      setErrorMessage("Під час отримання даних сталася помилка. Спробуйте ще раз");      
+      setError({
+        errorMessage: "Під час отримання даних сталася помилка",
+        actionMessage: "Будь ласка спробуйте ще раз"
+      });      
     }
   };
 
   const getWeatherForecast = async (latitude: number, longitude: number) => {
-    setErrorMessage("");
+    setError(null);
 
     try {
       const response = await axios.get(`${URL_OPENWEATHER_API}/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&lang=ua&appid=${KEY_OPENWEATHER_API}`);
@@ -125,7 +143,10 @@ const useWeatherForecast = () => {
       setForecast(forecastData);
     } catch (error) {
       console.error("Error fetching weather forecast ", error);
-      setErrorMessage("Під час отримання даних сталася помилка. Спробуйте ще раз");
+      setError({
+        errorMessage: "Під час отримання прогнозу погоди сталася помилка",
+        actionMessage: "Будь ласка спробуйте ще раз"
+      });
       setIsLoading(false);
     } finally {
       setIsForecastLoaded(true);
@@ -170,7 +191,7 @@ const useWeatherForecast = () => {
 
   useEffect(() => {
    
-  getCoordinatesByGeolocationAPI()
+    getCoordinatesByGeolocationAPI();
   }, [getCoordinatesByGeolocationAPI]);
   
   useEffect(() => {
@@ -199,7 +220,7 @@ const useWeatherForecast = () => {
     forecast,
     options,
     isLoading,
-    errorMessage,
+    error,
     handleInputChange,
     handleOptionSelect,
     handleClearOptionSelect,

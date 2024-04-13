@@ -14,6 +14,7 @@ import useWeatherForecast from "hooks/useWeatherForecast";
 import Layout from "components/Layout";
 import Header from "components/Header";
 import Loader from "components/Loader";
+import ErrorMessage from "components/ErrorMessage";
 
 
 const App: React.FC = () => { 
@@ -24,7 +25,7 @@ const App: React.FC = () => {
     forecast,
     options,
     isLoading,
-    errorMessage,
+    error,
     handleInputChange,
     handleOptionSelect,
     handleClearOptionSelect,
@@ -35,7 +36,7 @@ const App: React.FC = () => {
     <>      
       <Layout>
         {isLoading && <Loader />}
-        {errorMessage && <p>{errorMessage}</p>}
+        {error && <ErrorMessage error={error} />}
         {!isLoading &&          
           <Header
             city={city}
