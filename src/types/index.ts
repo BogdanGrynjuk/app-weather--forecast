@@ -12,6 +12,8 @@ declare module '@emotion/react' {
       bgBtnSearch: string;
       bgBtnClose: string;
       bgInputSearch: string;
+      error: string;
+      
 
     };
     ff: {

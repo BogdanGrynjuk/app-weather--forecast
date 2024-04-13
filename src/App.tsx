@@ -32,13 +32,11 @@ const App: React.FC = () => {
   } = useWeatherForecast();
 
   return (
-    <>
-      
-      
+    <>      
       <Layout>
         {isLoading && <Loader />}
         {errorMessage && <p>{errorMessage}</p>}
-        {!isLoading && city &&         
+        {!isLoading &&          
           <Header
             city={city}
             term={term}

@@ -6,9 +6,10 @@ import DropdownOptions from 'components/Header/DropdownOptions';
 import Location from './Location';
 import Search from './Search';
 import DecorationStripe from './DecorationStripe';
+import ErrorMessage from 'components/ErrorMessage';
 
 type Props = {
-  city: cityType
+  city: cityType | null
   term: string
   options: []
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
@@ -38,7 +39,10 @@ const Header: React.FC<Props> = (
   return (
     <Wrapper>
       <Content>
-        <Location isVisible={isVisible} city={city} />
+        {city 
+          ? <Location isVisible={isVisible} city={city} />
+          : <ErrorMessage isVisible={isVisible}>Локацію не знайдено</ErrorMessage>
+        }
         <Search
           term={term}
           handleInputChange={handleInputChange}

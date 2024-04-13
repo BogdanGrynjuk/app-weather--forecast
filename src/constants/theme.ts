@@ -5,9 +5,9 @@ const breakpoints: [string, string, string] = ['320px', '768px', '1280px'];
 export const theme: Theme = Object.freeze({
   color: {
     // Основні
-    textPrimaryLight: 'rgba(255, 255, 255, 1)', // Текст на темному фоні
-    textPrimaryDark: 'rgba(33, 34, 39, 1)', // Текст на світлому фоні
-    textSecondary: 'rgba(168, 203, 255, 1)', // Другорядний текст
+    textPrimaryLight: 'rgba(255, 255, 255, 1)',
+    textPrimaryDark: 'rgba(33, 34, 39, 1)',
+    textSecondary: 'rgba(168, 203, 255, 1)',
 
     // Основні кольори фону
     bgDark: 'rgba(33, 34, 39, 0.5)',
@@ -18,10 +18,7 @@ export const theme: Theme = Object.freeze({
     bgInputSearch: 'rgba(220, 20, 60, 1)',
 
     // Кольори для позначення
-    success: '#3CBC81', // зелений правильно
-    error: '#E74A3B', // червоний помилка
-    
-   
+    error: 'rgba(220, 20, 60, 1)',   
   },
   ff: {
     inconsolata: "'Inconsolata', monospace",

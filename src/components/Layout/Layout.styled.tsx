@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 export const VideoBG = styled.video`
   position: absolute;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   object-fit: cover;
   z-index: -1;  
 `;

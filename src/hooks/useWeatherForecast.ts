@@ -16,36 +16,47 @@ const useWeatherForecast = () => {
   const [isLocationLoaded, setIsLocationLoaded] = useState<boolean>(false);
   const [isForecastLoaded, setIsForecastLoaded] = useState<boolean>(false);
   const [initialLoadComplete, setInitialLoadComplete] = useState<boolean>(false);
-
-  const IPINFO_TOKEN = "805536fa8da0c5";
-  const OPENWEATHER_API_KEY = "ece85ccbe9bef82868f04d46c0d82058";
+  
+  const KEY_OPENWEATHER_API = "ece85ccbe9bef82868f04d46c0d82058";
   const URL_OPENWEATHER_API = "https://api.openweathermap.org";
 
   const DEBOUNCE_DELAY = 300;
-  
-  const getCoordinates = async () => {
-    setErrorMessage("");
 
-    try {
-      const response = await axios.get(`https://ipinfo.io/json?token=${IPINFO_TOKEN}`)
-      const data = response.data;
-      const [latitude, longitude] = data.loc.split(",");
-      setLatitude(Number(latitude));
-      setLongitude(Number(longitude));
+  interface IPosition {
+    coords: {
+      latitude: number;
+      longitude: number;
+    };
+  }; 
+
+  const getCoordinatesByGeolocationAPI = useCallback(async () => {
+    setErrorMessage("");
+    try {    
+      const permissionStatus = await navigator.permissions?.query({ name: 'geolocation' });
+      if (permissionStatus?.state === 'granted') {
+        const position: IPosition = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+        setLatitude(position.coords.latitude);
+        setLongitude(position.coords.longitude);
+      } else {
+        console.error('Geolocation permission not granted');
+        setErrorMessage("Оскільки дозвіл на отрмання геолокації не дозволено, будь ласка введіть назву населеного пункту у поле пошуку");
+        setIsLoading(false);
+      }    
     } catch (error) {
-      console.error("Error fetching coordinates: ", error);
+      console.error("Error fetching geolocation: ", error);
       setErrorMessage("Не можливо отримати Ваші координати. Будь ласка введіть назву населеного пункту у поле пошуку");
-      setIsLoading(false);
     } finally {
       setIsCoordinatesLoaded(true);
     }
-  };
+  }, []);
 
   const getLocationByCoordinates = async (latitude: number | null, longitude: number | null) => {
     setErrorMessage("");
     
     try {
-      const response = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${OPENWEATHER_API_KEY}`);
+      const response = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${KEY_OPENWEATHER_API}`);
       const data = response.data;
 
       if (data.length > 0) {        
@@ -65,7 +76,7 @@ const useWeatherForecast = () => {
     setErrorMessage("");
 
     try {
-      const response = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0//direct?q=${cityName}&limit=5&appid=${OPENWEATHER_API_KEY}`);
+      const response = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0//direct?q=${cityName}&limit=5&appid=${KEY_OPENWEATHER_API}`);
       const data = response.data;
 
       if (data.length > 0) {
@@ -75,6 +86,8 @@ const useWeatherForecast = () => {
           setCity(newCity);
         }
       } else {
+        setCity(null);
+        setForecast(null);
         setErrorMessage(`Погоди по цьому пункту (${cityName}), на жаль, на сайті немає`);
       }
     } catch (error) {
@@ -90,7 +103,7 @@ const useWeatherForecast = () => {
     setErrorMessage("");
 
     try {
-      const responce = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0/direct?q=${term.trim()}&limit=10&appid=${OPENWEATHER_API_KEY}`);
+      const responce = await axios.get(`${URL_OPENWEATHER_API}/geo/1.0/direct?q=${term.trim()}&limit=10&appid=${KEY_OPENWEATHER_API}`);
       const data = responce.data;
       setOptions(data);
     } catch (error) {
@@ -103,7 +116,7 @@ const useWeatherForecast = () => {
     setErrorMessage("");
 
     try {
-      const response = await axios.get(`${URL_OPENWEATHER_API}/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&lang=ua&appid=${OPENWEATHER_API_KEY}`);
+      const response = await axios.get(`${URL_OPENWEATHER_API}/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&lang=ua&appid=${KEY_OPENWEATHER_API}`);
       const data = response.data;      
       const forecastData = {
         ...data.city,
@@ -154,9 +167,11 @@ const useWeatherForecast = () => {
     setOptions([]);
   };
 
+
   useEffect(() => {
-    getCoordinates();
-  }, []);
+   
+  getCoordinatesByGeolocationAPI()
+  }, [getCoordinatesByGeolocationAPI]);
   
   useEffect(() => {
     if (latitude !== null && longitude !== null) {
