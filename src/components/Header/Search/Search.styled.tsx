@@ -76,7 +76,7 @@ export const Input = styled.input`
   color: ${p => p.theme.color.textSecondary};
   background-color: ${p => p.theme.color.bgInputSearch};
   box-shadow: 0 0 25px 0 crimson,
-                0 20px 25px 0 rgba(0, 0, 0, 0.2);
+              0 20px 25px 0 rgba(0, 0, 0, 0.2);
   opacity: 0;
   z-index: 5;
   transition: all 1s;

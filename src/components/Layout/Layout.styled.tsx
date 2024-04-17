@@ -17,10 +17,12 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  row-gap: 10px;
   
   @media screen and (${ p => p.theme.mq.tablet }) {
     padding: 20px;
-    width: 768px;    
+    width: 768px;
+    row-gap: 20px;
   }
 
   @media screen and (${ p => p.theme.mq.desktop }) {

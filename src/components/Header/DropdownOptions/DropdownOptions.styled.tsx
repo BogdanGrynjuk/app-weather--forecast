@@ -8,7 +8,8 @@ export const List = styled.ul`
   width: 100%;
   background-color: ${p => p.theme.color.bgDropdownOptions};
   border-radius: 10px;
-  padding: 70px 10px 10px;  
+  padding: 70px 10px 10px; 
+  z-index: 1;
 `;
 
 export const Item = styled.li`

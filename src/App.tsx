@@ -1,5 +1,4 @@
 import React from "react";
-import { WeatherSvg } from "weather-icons-animated";
 import Feels from "components/Icons/Feels";
 import Humidity from "components/Icons/Humidity";
 import Pop from "components/Icons/Pop";
@@ -15,6 +14,7 @@ import Layout from "components/Layout";
 import Header from "components/Header";
 import Loader from "components/Loader";
 import ErrorMessage from "components/ErrorMessage";
+import Main from "components/Main";
 
 
 const App: React.FC = () => { 
@@ -49,35 +49,12 @@ const App: React.FC = () => {
           />
         }
 
-        {!isLoading && forecast &&
-          <>
-            <div>Погода</div>
-            <div>
-              <span>{forecast.list[0].weather[0].description}</span>
-              <span> {Math.round(forecast.list[0].main.temp)}<sup>o</sup></span>
-            </div>
-          </>             
+        {!isLoading && forecast  &&
+          
+          <Main forecast={forecast}/>
+                
         }
         
-        <div style={{ backgroundColor: ' rgba(66, 54, 54, 0.5)' }}>
-          <div style={{ display: 'flex' }}>
-            <WeatherSvg state="sunny" width={50} height={50} />
-            <WeatherSvg state="clear-night" width={50} height={50} />
-            <WeatherSvg state="partlycloudy" width={50} height={50} />
-            <WeatherSvg state="cloudy" width={50} height={50} />
-            <WeatherSvg state="fog" width={50} height={50} />
-            <WeatherSvg state="hail" width={50} height={50} />
-            <WeatherSvg state="rainy" width={50} height={50} />
-            <WeatherSvg state="snowy" width={50} height={50} />
-            <WeatherSvg state="snowy-rainy" width={50} height={50} />
-            <WeatherSvg state="pouring" width={50} height={50} />
-            <WeatherSvg state="lightning" width={50} height={50} />
-            <WeatherSvg state="lightning-rainy" width={50} height={50} />
-            <WeatherSvg state="windy" width={50} height={50} />
-            <WeatherSvg state="sunny" width={50} height={50} />
-          </div>
-          <p style={{ color: "white", textAlign: "center" }}>Weather icons</p>
-        </div>        
      
         <div style={{ marginTop: 40, textAlign: "center" }}>
           <Feels /> <Humidity /> <Pop /> <Pressure /> <Sunrise /> <Sunset /> <Visibility /> <Wind />
