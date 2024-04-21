@@ -56,7 +56,7 @@ const App: React.FC = () => {
         }
         
      
-        <div style={{ marginTop: 40, textAlign: "center" }}>
+        <div style={{ marginTop: 800, textAlign: "center" }}>
           <Feels /> <Humidity /> <Pop /> <Pressure /> <Sunrise /> <Sunset /> <Visibility /> <Wind />
           <p style={{ color: "white", textAlign: "center" }}>Additional icons</p>
         </div>

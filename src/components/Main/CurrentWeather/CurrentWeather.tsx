@@ -1,36 +1,39 @@
-import React from 'react'
-import { Content } from './CurrentWeather.styled';
+import React, { useEffect, useState } from 'react'
+import { Content, Forecast, Info, Label, LocalDate, SunriseSunsetInfo, Weather, WeatherDescriotion } from './CurrentWeather.styled';
 import { weatherForecastType } from 'types';
 import moment from 'moment';
 import 'moment/locale/uk';
 import Sunrise from 'components/Icons/Sunrise';
 import Sunset from 'components/Icons/Sunset';
 import { WeatherSvg } from 'weather-icons-animated';
-
+import helpers from 'helpers';
 
 type Props = {
   forecast: weatherForecastType;
 }
 
+type WeatherState = 'sunny' | 'clear-night' | 'partlycloudy' | 'cloudy' | 'fog' | 'hail' | 'rainy' | 'snowy' | 'snowy-rainy' | 'pouring' | 'lightning' | 'lightning-rainy' | 'windy';
+
 const CurrentWeather: React.FC<Props> = ({ forecast }) => {
-  moment.locale('uk')
-  const today = forecast.list[0];
-  const { temp, temp_max, temp_min } = today.main;
-  const { description } = today.weather[0];
-  const codeIcon = today.weather[0].icon
+  moment.locale('uk');
 
-  const averageTemp = Math.round(temp);
-  const maxTemp = Math.ceil(temp_max);
-  const minTemp = Math.floor(temp_min);
+  const [currentDate, setCurrentDate] = useState<string>(moment().utcOffset(forecast.timezone / 60).format('dd, D MMMM, HH:mm'));
 
-  const sunrise = moment(forecast.sunrise * 1000).format('hh:mm');
-  const sunset = moment(forecast.sunset * 1000).format('hh:mm');
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentDate(moment().utcOffset(forecast.timezone / 60).format('dd, D MMMM, HH:mm'));
+    }, 60000 );
 
+    return () => clearInterval(interval);
+  }, [forecast.timezone]);
+  
+  const todayForecast = forecast.list[0];
+  const { temp } = todayForecast.main;
+  const { description, icon } = todayForecast.weather[0];  
 
-  const date = moment().format('D MMMM YYYY');
-  const time = moment().format('hh:mm');
-  const day = moment().format('dddd');
-
+  const sunrise = moment(forecast.sunrise * 1000).utcOffset(forecast.timezone / 60).format('HH:mm');
+  const sunset = moment(forecast.sunset * 1000).utcOffset(forecast.timezone / 60).format('HH:mm');
+  
   const codeMapping: { [key: string]: string } = {
   '01d': 'sunny',
   '01n': 'clear-night',
@@ -50,30 +53,36 @@ const CurrentWeather: React.FC<Props> = ({ forecast }) => {
   '13n': 'snowy',
   '50d': 'windy',
   '50n': 'windy',
-};
-
-  type WeatherState = 'sunny' | 'clear-night' | 'partlycloudy' | 'cloudy' | 'fog' | 'hail' | 'rainy' | 'snowy' | 'snowy-rainy' | 'pouring' | 'lightning' | 'lightning-rainy' | 'windy';
-
- 
+}; 
 
   return (
     <Content>
-      <div>{day}</div>
-      <div>{date}, {time}</div>
-      <div style={{ fontSize: 24 }}>
-        <WeatherSvg state={codeMapping[codeIcon] as WeatherState} width={50} height={50}/>
-        {averageTemp}<sup>o</sup>
-      </div>
-      <div style={{fontSize: 24}}>{description}</div>
-      <div>
-        схід сонця <Sunrise /> {sunrise}
-        <br />
-        захід сонця <Sunset /> {sunset}
-      </div>
-      <div>мін. {minTemp} макс. { maxTemp }</div>
+      <LocalDate>
+        <Label>Місцевий час:</Label>
+        <span>{helpers.makeFirstLetterUppercase(currentDate)}</span>       
+      </LocalDate>
+      
+      <Forecast>
+        <Weather>
+          <span>
+            {helpers.addPositiveSign(Math.round(temp))}<sup>o</sup>
+          </span>
+          <WeatherSvg state={codeMapping[icon] as WeatherState} width={60} height={60} />
+        </Weather>
+        <WeatherDescriotion >{helpers.makeFirstLetterUppercase(description)}</WeatherDescriotion>
+      </Forecast>
+      
+      <SunriseSunsetInfo>
+        <Label>Схід-захід сонця:</Label>
+        <Info>
+          <span><Sunrise />{sunrise}</span>        
+          <span><Sunset />{sunset}</span>
+        </Info>
+      </SunriseSunsetInfo>
+    
       
     </Content>
-  )
+  );
 }
 
-export default CurrentWeather
+export default CurrentWeather;

@@ -29,6 +29,7 @@ declare module '@emotion/react' {
       m: string;
       l: string;
       xl: string;
+      xxl: string;
     };
     mq: {
       mobile: string;
@@ -42,6 +43,8 @@ export type weatherForecastType = {
   country: string
   sunrise: number
   sunset: number
+  timezone: number
+
   list: [{
     clouds: {
       all: number
