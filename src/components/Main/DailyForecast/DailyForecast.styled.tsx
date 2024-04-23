@@ -47,14 +47,14 @@ export const Wrapper = styled.div`
     height: 100%;
   }
 
-  .swiper-slide {
+  /* .swiper-slide {
     text-align: center;
     font-size: 18px;
     background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+  } */
 
   .swiper-horizontal > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic, 
   .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {

@@ -138,7 +138,7 @@ const useWeatherForecast = () => {
       const data = response.data;      
       const forecastData = {
         ...data.city,
-        list: data.list.slice(0, 16)
+        list: data.list
       }
       setForecast(forecastData);
     } catch (error) {

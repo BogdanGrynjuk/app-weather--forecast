@@ -1,9 +1,9 @@
-const Feels = (): JSX.Element => (
+const Temp = (): JSX.Element => (
   <svg
-    width="15"
-    height="15"
+    width="24"
+    height="24"
     viewBox="0 0 40 100"
-    fill="#ffffff"
+    fill="rgba(33, 34, 39, 1)"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -14,4 +14,4 @@ const Feels = (): JSX.Element => (
   </svg>
 );
 
-export default Feels;
+export default Temp;

@@ -8,7 +8,7 @@ const Pop = (): JSX.Element => (
   >
     <path
       d="M34 94C44 94 64 88.55 64 62.24C64 35.92 34 4 34 4C34 4 4 35.92 4 62.24C4 88.55 24 94 34 94Z"
-      stroke="#ffffff"
+      stroke="rgba(33, 34, 39, 1)"
       strokeWidth="7"
       strokeLinecap="round"
       strokeLinejoin="round"

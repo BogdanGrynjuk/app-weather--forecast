@@ -1,15 +1,21 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Pagination, Keyboard, Mousewheel, EffectCreative } from 'swiper/modules';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 import { Wrapper } from './DailyForecast.styled';
-import { Pagination, Keyboard, Mousewheel, EffectCreative } from 'swiper/modules';
+import DetailedForecastForDay from '../DetailedForecastForDay';
+import { weatherForecastType } from 'types';
+
+type Props = {
+  forecast: weatherForecastType;
+}
 
 
-const DailyForecast: React.FC = () => {
+const DailyForecast: React.FC<Props> = ({forecast}) => {
   return (
     <Wrapper>
       <Swiper
@@ -42,7 +48,7 @@ const DailyForecast: React.FC = () => {
         mousewheel={{ invert: true }}
         modules={[Keyboard, Pagination, Mousewheel, EffectCreative]}       
       >
-        <SwiperSlide>Детальний прогноз на сьогодні</SwiperSlide>
+        <SwiperSlide><DetailedForecastForDay forecast={ forecast } /></SwiperSlide>
         <SwiperSlide>Прогноз на наступні дні</SwiperSlide>         
       </Swiper>
     </Wrapper>

@@ -13,7 +13,7 @@ const Main: React.FC<Props> = ({ forecast }) => {
   return (
     <Wrapper>
       <CurrentWeather forecast={forecast} />
-      <DailyForecast />
+      <DailyForecast forecast={forecast}/>
     </Wrapper>
   );
 }
