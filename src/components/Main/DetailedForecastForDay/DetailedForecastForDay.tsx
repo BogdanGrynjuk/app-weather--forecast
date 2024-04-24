@@ -14,7 +14,7 @@ type Props = {
 
 const DetailedForecastForDay: React.FC<Props> = ({ forecast }) => {
   
-  const currentForecast = forecast.list[0];
+  // const currentForecast = forecast.list[0];
   const forecastForDay = forecast.list.slice(0, 9);  
 
   return (

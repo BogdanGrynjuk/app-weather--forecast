@@ -42,7 +42,7 @@ const useWeatherForecast = () => {
       } else {
         console.error('Geolocation permission not granted');
         setError({
-          errorMessage: "Ваш браузер блокує дозвіл на отрмання поточної геолокації",
+          errorMessage: "Ваш браузер блокує дозвіл на отримання поточної геолокації",
           actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
         });
         setIsLoading(false);
@@ -189,8 +189,7 @@ const useWeatherForecast = () => {
   };
 
 
-  useEffect(() => {
-   
+  useEffect(() => {   
     getCoordinatesByGeolocationAPI();
   }, [getCoordinatesByGeolocationAPI]);
   
