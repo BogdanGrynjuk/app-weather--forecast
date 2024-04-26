@@ -47,15 +47,6 @@ export const Wrapper = styled.div`
     height: 100%;
   }
 
-  /* .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  } */
-
   .swiper-horizontal > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic, 
   .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
     display: flex;
@@ -68,16 +59,11 @@ export const Wrapper = styled.div`
     width: 11px;
     height: 11px;    
     border-radius: 10px;
-    background: ${p => p.theme.color.bgBtnClose}; 
-    opacity: 0.5;
-    transition: all .5s;
+    background: ${p => p.theme.color.bgDark};
+    opacity: 1;    
 
-    &-active {
-      opacity: 1;
-      background: ${p => p.theme.color.bgBtnSearch};
-      height: 11px;
-      width: 30px;
-      border-radius: 10px;
+    &-active {      
+      background: ${p => p.theme.color.bgBtnSearch};      
     }
   }       
 `;

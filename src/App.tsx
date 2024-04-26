@@ -8,13 +8,13 @@ import Loader from "components/Loader";
 import ErrorMessage from "components/ErrorMessage";
 import Main from "components/Main";
 
-
 const App: React.FC = () => { 
 
   const {
     city,
     term,
     forecast,
+    currentForecast,
     options,
     isLoading,
     error,
@@ -22,11 +22,11 @@ const App: React.FC = () => {
     handleOptionSelect,
     handleClearOptionSelect,
     handleSubmit
-  } = useWeatherForecast();
+  } = useWeatherForecast(); 
 
   return (
     <>      
-      <Layout>
+      <Layout>        
         {isLoading && <Loader />}
         {error && <ErrorMessage error={error} />}
         {!isLoading &&          
@@ -41,8 +41,8 @@ const App: React.FC = () => {
           />
         }
 
-        {!isLoading && forecast  &&          
-          <Main forecast={forecast}/>                
+        {!isLoading && forecast && currentForecast  &&          
+          <Main forecast={forecast} currentForecast={currentForecast } />                
         }
       </Layout>
     </>

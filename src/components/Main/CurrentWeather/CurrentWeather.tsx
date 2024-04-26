@@ -3,27 +3,27 @@ import moment from 'moment';
 import 'moment/locale/uk';
 import { WeatherSvg } from 'weather-icons-animated';
 import { Content, Forecast, Info, Label, LocalDate, SunriseSunsetInfo, TempFeelsLike, Weather, WeatherDescriotion } from './CurrentWeather.styled';
-import { weatherForecastType } from 'types';
+import { currentWeaherForecastType } from 'types';
 import DegreeCelsius from 'components/DegreeCelsius';
 import Sunrise from 'components/Icons/Sunrise';
 import Sunset from 'components/Icons/Sunset';
 import helpers from 'helpers';
 
 type Props = {
-  forecast: weatherForecastType;
+  currentForecast: currentWeaherForecastType;
 }
 
 type WeatherState = 'sunny' | 'clear-night' | 'partlycloudy' | 'cloudy' | 'fog' | 'hail' | 'rainy' | 'snowy' | 'snowy-rainy' | 'pouring' | 'lightning' | 'lightning-rainy' | 'windy';
 
-const CurrentWeather: React.FC<Props> = ({ forecast }) => {
+const CurrentWeather: React.FC<Props> = ({ currentForecast }) => {
   moment.locale('uk');
 
-  const todayForecast = forecast.list[0];
-  const { temp, feels_like } = todayForecast.main;
-  const { description, icon } = todayForecast.weather[0];
-  const utcOffset = forecast.timezone / 60;
+  const currentWeather = currentForecast;
+  const { temp, feels_like } = currentWeather.main;
+  const { description, icon } = currentWeather.weather[0];
+  const utcOffset = currentWeather.timezone / 60;
 
-  const [currentDate, setCurrentDate] = useState<string>(moment().utcOffset(utcOffset).format('dd, D MMMM, HH:mm'));
+  const [currentDate, setCurrentDate] = useState<string>(moment(currentWeather.dt * 1000).utcOffset(utcOffset).format('dd, D MMMM, HH:mm'));
 
   useEffect(() => {
     setCurrentDate(moment().utcOffset(utcOffset).format('dd, D MMMM, HH:mm'));
@@ -37,8 +37,8 @@ const CurrentWeather: React.FC<Props> = ({ forecast }) => {
     return () => clearInterval(interval);
   }, [utcOffset]);  
 
-  const sunrise = moment(forecast.sunrise * 1000).utcOffset(utcOffset).format('HH:mm');
-  const sunset = moment(forecast.sunset * 1000).utcOffset(utcOffset).format('HH:mm');
+  const sunrise = moment(currentWeather.sys.sunrise * 1000).utcOffset(utcOffset).format('HH:mm');
+  const sunset = moment(currentWeather.sys.sunset * 1000).utcOffset(utcOffset).format('HH:mm');
   
   const codeMapping: { [key: string]: string } = {
   '01d': 'sunny',

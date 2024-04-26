@@ -1,7 +1,7 @@
 import { FormEvent, ChangeEvent, useCallback, useEffect, useState } from "react";
 import debounce from 'lodash/debounce';
 import axios from "axios";
-import { weatherForecastType, cityType, IError } from "../types";
+import { weatherForecastType, cityType, IError, currentWeaherForecastType } from "../types";
 
 const useWeatherForecast = () => {
   const [latitude, setLatitude] = useState<number | null>(null);
@@ -16,11 +16,12 @@ const useWeatherForecast = () => {
   const [isLocationLoaded, setIsLocationLoaded] = useState<boolean>(false);
   const [isForecastLoaded, setIsForecastLoaded] = useState<boolean>(false);
   const [initialLoadComplete, setInitialLoadComplete] = useState<boolean>(false);
+  const [currentForecast, setCurrentForecast] = useState<currentWeaherForecastType | null>(null); 
   
   const KEY_OPENWEATHER_API = "ece85ccbe9bef82868f04d46c0d82058";
   const URL_OPENWEATHER_API = "https://api.openweathermap.org";
 
-  const DEBOUNCE_DELAY = 300;
+  const DEBOUNCE_DELAY = 3000;
 
   interface IPosition {
     coords: {
@@ -153,12 +154,32 @@ const useWeatherForecast = () => {
     }
   };
 
+  const getCurrentWeaherForecast = async (latitude: number, longitude: number) => {
+    setError(null);
+
+    try {
+      const responce = await axios.get(`${URL_OPENWEATHER_API}/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&lang=ua&appid=${KEY_OPENWEATHER_API}`)
+      const data = responce.data;
+      setCurrentForecast(data);
+    } catch (error) {
+      console.error("Error fetching current weather forecast ", error);
+      setError({
+        errorMessage: "Під час отримання прогнозу погоди сталася помилка",
+        actionMessage: "Будь ласка спробуйте ще раз"
+      });
+      setIsLoading(false);
+    } finally {
+      setIsForecastLoaded(true);
+    }
+
+  }
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearchOptions = useCallback(
     debounce((value: string) => {
       getSearchOptions(value);
     }, DEBOUNCE_DELAY),
-    [getSearchOptions, DEBOUNCE_DELAY]
+    []
   );
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -202,6 +223,7 @@ const useWeatherForecast = () => {
   useEffect(() => {
     if (city !== null) {
       getWeatherForecast(city.lat, city.lon);
+      getCurrentWeaherForecast(city.lat, city.lon); 
     }
   }, [city]);
 
@@ -217,6 +239,7 @@ const useWeatherForecast = () => {
     city,    
     term,
     forecast,
+    currentForecast,
     options,
     isLoading,
     error,
