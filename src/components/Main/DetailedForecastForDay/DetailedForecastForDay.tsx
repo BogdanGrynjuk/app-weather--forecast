@@ -1,7 +1,4 @@
 import DegreeCelsius from 'components/DegreeCelsius';
-import Humidity from 'components/Icons/Humidity';
-import Visibility from 'components/Icons/Visibility';
-import Wind from 'components/Icons/Wind';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { currentWeaherForecastType, weatherForecastType } from 'types';
