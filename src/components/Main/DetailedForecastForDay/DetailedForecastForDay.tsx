@@ -1,12 +1,14 @@
 import DegreeCelsius from 'components/DegreeCelsius';
 import Humidity from 'components/Icons/Humidity';
-import Pressure from 'components/Icons/Pressure';
 import Visibility from 'components/Icons/Visibility';
 import Wind from 'components/Icons/Wind';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { currentWeaherForecastType, weatherForecastType } from 'types';
 import { Section } from './DetailedForecastForDay.styled';
+import WeatherParamCard from '../WeatherParamCard/WeatherParamCard';
+import helpers from 'helpers';
+
 
 type Props = {
   forecast: weatherForecastType;
@@ -18,6 +20,9 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
   const currentWeather = currentForecast;
   const forecastForDay = forecast.list.slice(0, 8);
   const utcOffset = currentWeather.timezone / 60;
+
+  const { pressure, humidity } = currentWeather.main;
+  const { wind, visibility } = currentWeather;
   
   const [currentTime, setCurrentTime] = useState<string>(moment(currentWeather.dt * 1000).utcOffset(utcOffset).format('HH:mm'));
 
@@ -61,19 +66,37 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
       </Section>
       <section>
         <h2>Поточні погодні характеристики: </h2>
-        <p>
-          <Pressure /> Тиск, { Math.round(currentWeather.main.pressure * 0.75006375541921) } мм рт.ст. - 
-          {`
-            ${Math.round(currentWeather.main.pressure) < 1013
-              ? 'Менше'
-            : 'Більше'
-            }
-          ніж стандарт (760 мм)
-` }
-                  </p>
-        <p><Humidity /> Вологість, { currentWeather.main.humidity } %</p>
-        <p><Wind /> Вітер {Math.round(currentForecast.wind.speed)} м/с, порив вітру { Math.round(currentForecast.wind.gust) } м/с </p>       
-        <p><Visibility /> Видимість, {(currentForecast.visibility).toFixed()} м</p>
+        <div style={{display: "flex"}}>
+          <WeatherParamCard
+          icon="pressure"
+          title="Тиск"
+          value={`${pressure} мм`}
+  
+          description={helpers.getPressureDescription(pressure)}
+        />
+        <WeatherParamCard
+          icon="humidity"
+          title="Вологість"
+          value={`${humidity} %`}  
+          description={helpers.getHumidityDesription(humidity)}
+          />
+           <WeatherParamCard
+          icon="visibility"
+          title="Видимість"
+          value={`${visibility} м`}  
+          description={helpers.getVisibilityDescription(visibility)}
+        />
+           <WeatherParamCard
+          icon="wind"
+          title="Вітер"
+          value={`${Math.round(wind.speed)} м/с`}  
+          description={helpers.getWindDirection(wind.deg)}
+        />
+          
+        </div>
+
+        
+        
       </section>
     </>
   );
