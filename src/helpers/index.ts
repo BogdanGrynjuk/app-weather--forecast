@@ -27,16 +27,17 @@ export const getVisibilityDescription = (value: number): string => {
   return 'Дуже ясний день';
 };
 
-export const getWindDirection = (deg: number): string => {
-  
-  if (deg > 15 && deg <= 75) return 'Пн-сх';
-  if (deg > 76 && deg <= 105) return 'Сх';
-  if (deg > 105 && deg <= 165) return 'Пд-Сх';
-  if (deg > 166 && deg <= 195) return 'Пд';
-  if (deg > 195 && deg <= 255) return 'Пд-Зх';
-  if (deg > 255 && deg <= 285) return 'Зх';
-  if (deg > 285 && deg <= 345) return 'Пн-Зх';
-  return 'Пн';
+export const getWindDirection = (deg: number, gust: number): string => {
+  let direction: string = "Пн";
+
+  if (deg > 15 && deg <= 75) direction = "Пн-сх";
+  if (deg > 76 && deg <= 105) direction = "Сх";
+  if (deg > 105 && deg <= 165) direction = "Пд-Сх";
+  if (deg > 166 && deg <= 195) direction = "Пд";
+  if (deg > 195 && deg <= 255) direction = "Пд-Зх";
+  if (deg > 255 && deg <= 285) direction = "Зх";
+  if (deg > 285 && deg <= 345) direction = "Пн-Зх";
+  return `Напрямок ${direction}, пориви вітру ${Math.round(gust)} м/с`;
 };
 
 

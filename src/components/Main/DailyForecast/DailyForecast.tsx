@@ -20,7 +20,8 @@ const DailyForecast: React.FC<Props> = ({forecast , currentForecast}) => {
   return (
     <Wrapper>
       <Swiper
-       effect={'creative'}
+        effect={'creative'}
+        speed={1000}
         creativeEffect={{
           prev: {
             shadow: true,
@@ -37,7 +38,7 @@ const DailyForecast: React.FC<Props> = ({forecast , currentForecast}) => {
             rotate: [0, -100, 0],
           },
         }}
-        loop={true}
+        loop={false}
         pagination={{
           dynamicBullets: true,
           clickable: true
