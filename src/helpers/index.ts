@@ -8,26 +8,26 @@ const addPositiveSign = (number: number): string => {
 };
 
 const getPressureDescription = (value: number): string => {
-  if (Math.round(value * 0.75006375541921) < 760) return "Менше стандартного";
-  if (Math.round(value * 0.75006375541921) > 760) return "Більше стандартного";
-  return "У межах стандарту"
+  if (Math.round(value * 0.75006375541921) < 760) return "Менше норми";
+  if (Math.round(value * 0.75006375541921) > 760) return "Більше норми";
+  return "У межах норми"
 };
 
-export const getHumidityDesription = (level: number): string => {
+export const getHumidityDescription = (level: number): string => {
   if (level <= 55) return "Сухо і комфортно";
-  if (level > 55 && level <= 65) return "Висока вологість, некомфортно";
-  return "Дуже висока вологость, некомфортно";
+  if (level > 55 && level <= 65) return "Підвищена вологість";
+  return "Висока вологість";
 };
 
 export const getVisibilityDescription = (value: number): string => {
-  if (value <= 50) return 'Небезпечно, погана видимість';
+  if (value <= 50) return 'Небезпечно';
   if (value > 50 && value <= 500) return 'Cильний туман';
   if (value > 500 && value <= 2000) return 'Легкий туман';
-  if (value > 2000 && value <= 9000) return 'Хмарний день, видимість хороша';
+  if (value > 2000 && value <= 9000) return 'Bидимість хороша';
   return 'Дуже ясний день';
 };
 
-export const getWindDirection = (deg: number, gust: number): string => {
+export const getWindDescription = (deg: number, gust: number): string => {
   let direction: string = "Пн";
 
   if (deg > 15 && deg <= 75) direction = "Пн-сх";
@@ -37,7 +37,7 @@ export const getWindDirection = (deg: number, gust: number): string => {
   if (deg > 195 && deg <= 255) direction = "Пд-Зх";
   if (deg > 255 && deg <= 285) direction = "Зх";
   if (deg > 285 && deg <= 345) direction = "Пн-Зх";
-  return `Напрямок ${direction}, пориви вітру ${Math.round(gust)} м/с`;
+  return `${direction}, порив ${Math.round(gust)} м/с`;
 };
 
 
@@ -45,9 +45,9 @@ export const helpers = {
   makeFirstLetterUppercase,
   addPositiveSign,
   getPressureDescription,
-  getHumidityDesription,
+  getHumidityDescription,
   getVisibilityDescription,
-  getWindDirection
+  getWindDescription
 };
 
 export default helpers;

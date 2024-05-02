@@ -2,7 +2,7 @@ import DegreeCelsius from 'components/DegreeCelsius';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { currentWeaherForecastType, weatherForecastType } from 'types';
-import { Data, Section, SectionTitle, TempItem } from './DetailedForecastForDay.styled';
+import { Date, Section, SectionTitle, TempItem, WeatherParamList } from './DetailedForecastForDay.styled';
 import WeatherParamCard from '../WeatherParamCard/WeatherParamCard';
 import helpers from 'helpers';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,14 +13,12 @@ import 'swiper/css/scrollbar';
 
 import { FreeMode, Scrollbar } from 'swiper/modules';
 
-
 type Props = {
   forecast: weatherForecastType;
   currentForecast: currentWeaherForecastType;
-}
+};
 
 const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) => {
-  
   const currentWeather = currentForecast;
   const forecastForThreeDays = forecast.list.slice(0, 24);
   const utcOffset = currentWeather.timezone / 60;
@@ -40,22 +38,23 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
     }, 60000 );
 
     return () => clearInterval(interval);
-  }, [utcOffset]); 
+  }, [utcOffset]);
+  
   return (
     <>
       <Section>
         <SectionTitle>Прогноз погоди на три дні:</SectionTitle>
         <Swiper
-          slidesPerView={9}        
-          breakpoints = {{            
+          slidesPerView={9}
+          breakpoints={{
             320: {
               slidesPerView: 5,
               spaceBetween: 10
-            },            
+            },
             768: {
-              slidesPerView: 7,
+              slidesPerView: 6,
               spaceBetween: 20
-            },            
+            },
             1280: {
               slidesPerView: 9,
               spaceBetween: 30
@@ -64,15 +63,15 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
           freeMode={true}
           scrollbar={{
             draggable: true,
-            hide: true,    
+            hide: true,
           }}
           modules={[FreeMode, Scrollbar]}
           nested={true}
           grabCursor={false}
         >
-          <SwiperSlide>              
+          <SwiperSlide key={`${currentWeather.dt}-temp`}>
             <TempItem>
-              <span>{currentTime}</span>              
+              <span>{currentTime}</span>
               <img
                 alt={`weather-icon-${currentWeather.weather[0].description}`}
                 src={`http://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png`}
@@ -81,35 +80,44 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
             </TempItem>
           </SwiperSlide>
           {forecastForThreeDays.map((item) => (
-            <>
-              {moment(item.dt * 1000).format("HH:mm") === "00:00" &&
-                <SwiperSlide>
-                  <Data>
-                    <span>{ helpers.makeFirstLetterUppercase( moment(item.dt * 1000).utcOffset(utcOffset).format("dd"))}</span>
-                    <span>{ moment(item.dt * 1000).utcOffset(utcOffset).format("DD")}</span>
-                    <span>{ moment(item.dt * 1000).utcOffset(utcOffset).format("MMM")}</span>
-                  </Data>
-                </SwiperSlide>}
-            <SwiperSlide>
-              <TempItem>
-                <span>{moment(item.dt * 1000).format("HH:mm")}</span>
-              
-                <img
-                  alt={`weather-icon-${item.weather[0].description}`}
-                  src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
-                />
-                <DegreeCelsius temperature={Math.round(item.main.temp)} />
-              </TempItem>
+            <React.Fragment key={item.dt}>
+              {
+                moment(item.dt * 1000).format("HH:mm") === "00:00" &&
+                <SwiperSlide key={`${item.dt}-date`}>
+                  <Date className={
+                    (
+                      moment(item.dt * 1000).utcOffset(utcOffset).format("dd").toLowerCase() === "сб"
+                      ||
+                      moment(item.dt * 1000).utcOffset(utcOffset).format("dd").toLowerCase() === "нд"
+                    )
+                      ? 'isDayOff'
+                      : ''
+                  }>
+                    <span>{helpers.makeFirstLetterUppercase(moment(item.dt * 1000).utcOffset(utcOffset).format("dd"))}</span>
+                    <span>{moment(item.dt * 1000).utcOffset(utcOffset).format("DD")}</span>
+                    <span>{moment(item.dt * 1000).utcOffset(utcOffset).format("MMM")}</span>
+                  </Date>
+                </SwiperSlide>
+              }
+              <SwiperSlide key={`${item.dt}-temp`}>
+                <TempItem>
+                  <span>{moment(item.dt * 1000).format("HH:mm")}</span>                 
+                  <img
+                    alt={`weather-icon-${item.weather[0].description}`}
+                    src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                  />
+                  <DegreeCelsius temperature={Math.round(item.main.temp)} />
+                </TempItem>
               </SwiperSlide>
-              </>
+            </React.Fragment>
           ))}
 
         </Swiper>
         
       </Section>
-      <section>
+      <Section>
         <SectionTitle>Поточні погодні характеристики: </SectionTitle>
-        <div style={{ display: "flex" }}>
+        <WeatherParamList>
           <WeatherParamCard
             icon="pressure"
             title="Тиск"
@@ -121,7 +129,7 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
             icon="humidity"
             title="Вологість"
             value={`${humidity} %`}
-            description={helpers.getHumidityDesription(humidity)}
+            description={helpers.getHumidityDescription(humidity)}
           />
           <WeatherParamCard
             icon="visibility"
@@ -133,14 +141,14 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
             icon="wind"
             title="Вітер"
             value={`${Math.round(wind.speed)} м/с`}
-            description={helpers.getWindDirection(wind.deg, wind.gust)}
+            description={helpers.getWindDescription(wind.deg, wind.gust)}
           />
           
-        </div>
+        </WeatherParamList>
 
         
         
-      </section>
+      </Section>
     </>
   );
 }

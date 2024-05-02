@@ -12,52 +12,75 @@ export const Section = styled.section`
 `;
 
 export const SectionTitle = styled.h2`
-  margin-bottom: 5px;
-  font-size: ${p => p.theme.fs.m};
-  font-weight: ${p => p.theme.fw.semiBold};
-  letter-spacing: -1px;
-
- @media screen and (${p => p.theme.mq.desktop}) {
-  font-size: ${p => p.theme.fs.l};
-  letter-spacing: 0;
- }
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden; 
 `;
-
-
 
 export const TempItem = styled.div`
   display: flex;
   flex-direction: column;  
   width: 40px;
   text-align: center;
+  font-size: ${p => p.theme.fs.s};
+  font-weight: ${p => p.theme.fw.semiBold};
 
-  @media screen  and (${p => p.theme.mq.tablet}){
+
+  @media screen  and (${p => p.theme.mq.tablet}) {
     width: 50px;
   }
 
-  @media screen  and (${p => p.theme.mq.desktop}){
+  @media screen  and (${p => p.theme.mq.desktop}) {
+    font-size: ${p => p.theme.fs.m};
     width: 60px;
   }
 `;
 
-export const Data = styled.div`
+export const Date = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
-  font-size: ${p => p.theme.fs.s};
+  font-size: ${p => p.theme.fs.s}; 
    
-  & :nth-child(2){
+  & :nth-of-type(2){
     font-size: ${p => p.theme.fs.l};
-    font-weight: ${p => p.theme.fw.bold};
+    font-weight: ${p => p.theme.fw.bold};    
   }
+
+   &.isDayOff {
+    color: rgba(220, 20, 60, 1);
+   }
 
   @media screen and (${p => p.theme.mq.tablet}) {
     font-size: ${p => p.theme.fs.m};
 
-    & :nth-child(2){
+    & :nth-of-type(2) {
       font-size: ${p => p.theme.fs.xl};      
+    }
   }
+`;
+
+export const WeatherParamList = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+
+  @media screen and (${p => p.theme.mq.tablet}) {
+    gap: 10px;
+    
+  }
+
+  @media screen and (${p => p.theme.mq.desktop}) {
+    gap: 20px;
   }
 `
