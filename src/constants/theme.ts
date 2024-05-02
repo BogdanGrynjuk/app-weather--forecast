@@ -25,7 +25,7 @@ export const theme: Theme = Object.freeze({
   },
   fw: {
     regular: 400,
-    semiBold: 600,
+    semiBold: 500,
     bold: 700,
   },
   fs: {

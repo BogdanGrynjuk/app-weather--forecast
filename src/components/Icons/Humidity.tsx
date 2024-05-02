@@ -3,7 +3,7 @@ const Humidity = (): JSX.Element => (
     width="15"
     height="15"
     viewBox="0 0 113 108"
-    fill="rgba(33, 34, 39, 1)"
+    fill="rgba(255, 255, 255, 1)"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -11,7 +11,7 @@ const Humidity = (): JSX.Element => (
       strokeWidth="7"
       strokeLinecap="round"
       strokeLinejoin="round"
-      stroke="rgba(33, 34, 39, 1)"
+      stroke="rgba(255, 255, 255, 1)"
     />
   </svg>
 );

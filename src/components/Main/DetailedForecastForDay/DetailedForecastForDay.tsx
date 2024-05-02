@@ -2,7 +2,7 @@ import DegreeCelsius from 'components/DegreeCelsius';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { currentWeaherForecastType, weatherForecastType } from 'types';
-import { Date, Section, SectionTitle, TempItem, WeatherParamList } from './DetailedForecastForDay.styled';
+import { Date, Section, SectionTitle, TempItem, WeatherParamList, Wrapper } from './DetailedForecastForDay.styled';
 import WeatherParamCard from '../WeatherParamCard/WeatherParamCard';
 import helpers from 'helpers';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -41,7 +41,7 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
   }, [utcOffset]);
   
   return (
-    <>
+    <Wrapper>
       <Section>
         <SectionTitle>Прогноз погоди на три дні:</SectionTitle>
         <Swiper
@@ -52,7 +52,7 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
               spaceBetween: 10
             },
             768: {
-              slidesPerView: 6,
+              slidesPerView: 7,
               spaceBetween: 20
             },
             1280: {
@@ -120,36 +120,35 @@ const DetailedForecastForDay: React.FC<Props> = ({ forecast, currentForecast }) 
         <WeatherParamList>
           <WeatherParamCard
             icon="pressure"
-            title="Тиск"
-            value={`${pressure} мм`}
-  
+            title="Атм. тиск"
+            value={Math.round(pressure * 0.75006375541921)}
+            unit="мм"  
             description={helpers.getPressureDescription(pressure)}
           />
           <WeatherParamCard
             icon="humidity"
             title="Вологість"
-            value={`${humidity} %`}
+            value={humidity}
+            unit="%"
             description={helpers.getHumidityDescription(humidity)}
           />
           <WeatherParamCard
             icon="visibility"
             title="Видимість"
-            value={`${visibility} м`}
+            value={visibility}
+            unit="м"
             description={helpers.getVisibilityDescription(visibility)}
           />
           <WeatherParamCard
             icon="wind"
             title="Вітер"
-            value={`${Math.round(wind.speed)} м/с`}
+            value={Math.round(wind.speed)}
+            unit="м/с"
             description={helpers.getWindDescription(wind.deg, wind.gust)}
-          />
-          
-        </WeatherParamList>
-
-        
-        
+          />          
+        </WeatherParamList>        
       </Section>
-    </>
+    </Wrapper>
   );
 }
 

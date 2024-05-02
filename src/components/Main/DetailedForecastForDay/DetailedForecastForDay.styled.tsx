@@ -1,5 +1,15 @@
 import styled from "@emotion/styled";
 
+export const Wrapper = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  @media screen  and (${p => p.theme.mq.desktop}) {
+    justify-content: space-around;
+  }
+`;
+
 export const Section = styled.section`
   color: ${p => p.theme.color.textPrimaryDark};
   width: 100%;  
@@ -7,8 +17,7 @@ export const Section = styled.section`
 .swiper-slide {  
   padding-bottom: 15px;
   height: auto; 
-}
- 
+} 
 `;
 
 export const SectionTitle = styled.h2`

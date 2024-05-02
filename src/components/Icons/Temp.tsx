@@ -3,7 +3,7 @@ const Temp = (): JSX.Element => (
     width="24"
     height="24"
     viewBox="0 0 40 100"
-    fill="rgba(33, 34, 39, 1)"
+    fill="rgba(255, 255, 255, 1)"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
