@@ -12,12 +12,11 @@ const App: React.FC = () => {
 
   const {
     city,
-    term,
-    forecast,
-    currentForecast,
+    term,    
     options,
     isLoading,
     error,
+    weatherForecast,
     handleInputChange,
     handleOptionSelect,
     handleClearOptionSelect,
@@ -41,8 +40,8 @@ const App: React.FC = () => {
           />
         }
 
-        {!isLoading && forecast && currentForecast  &&          
-          <Main forecast={forecast} currentForecast={currentForecast } />                
+        {!isLoading && weatherForecast &&         
+          <Main weatherForecast={weatherForecast } />                
         }
       </Layout>
     </>

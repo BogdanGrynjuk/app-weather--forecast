@@ -8,15 +8,13 @@ import 'swiper/css/scrollbar';
 
 import { Wrapper } from './DailyForecast.styled';
 import DetailedForecastForDay from '../DetailedForecastForDay';
-import { currentWeaherForecastType, weatherForecastType } from 'types';
+import { weatherDataType } from 'types';
 
 type Props = {
-  forecast: weatherForecastType;
-  currentForecast: currentWeaherForecastType
+  weatherForecast: weatherDataType
 }
 
-
-const DailyForecast: React.FC<Props> = ({forecast , currentForecast}) => {
+const DailyForecast: React.FC<Props> = ({ weatherForecast}) => {
   return (
     <Wrapper>
       <Swiper
@@ -50,7 +48,7 @@ const DailyForecast: React.FC<Props> = ({forecast , currentForecast}) => {
         mousewheel={{ invert: true }}
         modules={[Keyboard, Pagination, Mousewheel, EffectCreative]}       
       >
-        <SwiperSlide><DetailedForecastForDay forecast={forecast} currentForecast={currentForecast} /></SwiperSlide>
+        <SwiperSlide><DetailedForecastForDay weatherForecast={weatherForecast} /></SwiperSlide>
         <SwiperSlide>Прогноз на наступні дні</SwiperSlide>         
       </Swiper>
     </Wrapper>

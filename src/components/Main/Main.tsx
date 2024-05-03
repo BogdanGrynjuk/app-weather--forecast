@@ -2,19 +2,18 @@ import React from 'react'
 import { Wrapper } from './Main.styled'
 import DailyForecast from './DailyForecast';
 import CurrentWeather from './CurrentWeather';
-import { currentWeaherForecastType, weatherForecastType } from 'types';
+import { weatherDataType } from 'types';
 
 type Props = {
-  forecast: weatherForecastType;
-  currentForecast: currentWeaherForecastType
+  weatherForecast: weatherDataType
 }
 
-const Main: React.FC<Props> = ({ forecast, currentForecast }) => {
+const Main: React.FC<Props> = ({ weatherForecast }) => {
   
   return (
     <Wrapper>
-      <CurrentWeather currentForecast={currentForecast} />
-      <DailyForecast forecast={forecast} currentForecast={currentForecast} />
+      <CurrentWeather weatherForecast={ weatherForecast } />
+      <DailyForecast  weatherForecast={ weatherForecast }/>
     </Wrapper>
   );
 }

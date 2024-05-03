@@ -103,6 +103,91 @@ export type currentWeaherForecastType = {
   timezone: number
 };
 
+export type weatherDataType = {
+  current: currentWeatherDataType;
+  daily: dailyWeatherDataType[];
+  hourly: hourlyWeatherDataType[];
+  lat: number;
+  lon: number;
+  timezone: string;
+  timezone_offset: number;
+};
+
+type currentWeatherDataType = {
+  clouds: number;
+  dew_point: number;
+  dt: number;
+  feels_like: number;
+  humidity: number;
+  pressure: number;
+  sunrise: number;
+  sunset: number;
+  temp: number;
+  uvi: number;
+  visibility: number;
+  weather: weatherConditionType[];
+  wind_speed: number;
+  wind_deg: number;
+  wind_gust: number;
+};
+
+type weatherConditionType = {
+  description: string;
+  icon: string;
+  id: number;
+  main: string;
+};
+
+type dailyWeatherDataType = {
+  clouds: number;
+  dew_point: number;
+  dt: number;
+  feels_like: {
+    day: number;
+    night: number;
+    eve: number;
+    morn: number;
+  };
+  humidity: number;
+  moon_phase: number;
+  moonrise: number;
+  moonset: number;
+  pop: number;
+  pressure: number;
+  sunrise: number;
+  sunset: number;
+  temp: {
+    day: number;
+    eve: number;
+    max: number;
+    min: number;
+    morn: number;
+    night: number;
+  };
+  uvi: number;
+  weather: weatherConditionType[];
+  wind_deg: number;
+  wind_gust: number;
+  wind_speed: number;
+};
+
+type hourlyWeatherDataType = {
+  clouds: number;
+  dew_point: number;
+  dt: number;
+  feels_like: number;
+  humidity: number;
+  pop: number;
+  pressure: number;
+  temp: number;
+  uvi: number;
+  visibility: number;
+  weather: weatherConditionType[];
+  wind_speed: number;
+  wind_deg: number;
+  wind_gust: number;
+};
+
 export type cityType = {
   name: string
   country: string
@@ -124,6 +209,8 @@ export type optionType = {
   lon: number
   state: string
 };
+
+export type weatherStateType = 'sunny' | 'clear-night' | 'partlycloudy' | 'cloudy' | 'fog' | 'hail' | 'rainy' | 'snowy' | 'snowy-rainy' | 'pouring' | 'lightning' | 'lightning-rainy' | 'windy';
 
 export interface IError {
     errorMessage: string;

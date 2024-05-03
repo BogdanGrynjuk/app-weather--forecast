@@ -31,6 +31,7 @@ const progressTwo = keyframes`
     opacity: 0;
   }
 `;
+
 export const Stripe = styled.div`
   position: absolute;
   bottom: 8px;
@@ -63,13 +64,13 @@ export const Stripe = styled.div`
       rgba(255, 255, 255, 0.4) 80%, 
       rgba(255, 255, 255, 1));
 
-      @media screen and (${p => p.theme.mq.tablet}) {
-        animation-duration: 12s;
-      }
+    @media screen and (${p => p.theme.mq.tablet}) {
+      animation-duration: 12s;
+    }
 
-      @media screen and (${p => p.theme.mq.desktop}) {
-        animation-duration: 16s;
-      }
+    @media screen and (${p => p.theme.mq.desktop}) {
+      animation-duration: 16s;
+    }
   }
   
   &:after {
@@ -90,6 +91,7 @@ export const Stripe = styled.div`
                 -40px 0 15px 2px rgba(255, 255, 255, 0.2),
                 -60px 0 10px 1px rgba(255, 255, 255, 0.1),
                 -80px 0 10px 1px rgba(255, 255, 255, 0.05);
+                
     @media screen and (${p => p.theme.mq.tablet}) {
       --translate-x: calc(768px - 20px - 20px - 50px);      
       animation-duration: 12s;

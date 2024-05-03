@@ -15,7 +15,7 @@ const getPressureDescription = (value: number): string => {
 
 export const getHumidityDescription = (level: number): string => {
   if (level < 30) return "Сухо і некомфортно";
-  if (level >= 30 && level <= 60) return "Комфортна вологість";
+  if (level >= 30 && level <= 60) return "Комфортно";
   return "Висока вологість";
 };
 
@@ -29,10 +29,10 @@ export const getVisibilityDescription = (value: number): string => {
 
 export const getWindDescription = (deg: number, gust: number): string => {
   let direction: string = "Пн";
-  let gusts: number = 0;
+  let gusts: string = "немає";
   
   if (gust) {
-    gusts = Math.round(gust);
+    gusts = `${Math.round(gust)}м/с`;
   }
 
   if (deg > 15 && deg <= 75) direction = "Пн-сх";
@@ -42,7 +42,7 @@ export const getWindDescription = (deg: number, gust: number): string => {
   if (deg > 195 && deg <= 255) direction = "Пд-Зх";
   if (deg > 255 && deg <= 285) direction = "Зх";
   if (deg > 285 && deg <= 345) direction = "Пн-Зх";
-  return `${direction}, порив ${gusts} м/с`;
+  return `${direction}, пориви ${gusts}`;
 };
 
 

@@ -3,27 +3,28 @@ import moment from 'moment';
 import 'moment/locale/uk';
 import { WeatherSvg } from 'weather-icons-animated';
 import { Content, Forecast, Info, Label, LocalDate, SunriseSunsetInfo, TempFeelsLike, Weather, WeatherDescriotion } from './CurrentWeather.styled';
-import { currentWeaherForecastType } from 'types';
 import DegreeCelsius from 'components/DegreeCelsius';
 import Sunrise from 'components/Icons/Sunrise';
 import Sunset from 'components/Icons/Sunset';
 import helpers from 'helpers';
+import { weatherDataType, weatherStateType } from 'types';
+import weatherIconStateMapping from 'constants/weatherIconStateMapping';
 
 type Props = {
-  currentForecast: currentWeaherForecastType;
+  weatherForecast: weatherDataType
 }
 
-type WeatherState = 'sunny' | 'clear-night' | 'partlycloudy' | 'cloudy' | 'fog' | 'hail' | 'rainy' | 'snowy' | 'snowy-rainy' | 'pouring' | 'lightning' | 'lightning-rainy' | 'windy';
-
-const CurrentWeather: React.FC<Props> = ({ currentForecast }) => {
+const CurrentWeather: React.FC<Props> = ({ weatherForecast }) => {
   moment.locale('uk');
 
-  const currentWeather = currentForecast;
-  const { temp, feels_like } = currentWeather.main;
-  const { description, icon } = currentWeather.weather[0];
-  const utcOffset = currentWeather.timezone / 60;
+  const currentWeaterForecast = weatherForecast.current;
+  const { temp, feels_like, dt, sunrise, sunset } = currentWeaterForecast; 
+  const { description, icon } = currentWeaterForecast.weather[0];
+  const utcOffset = weatherForecast.timezone_offset / 60;
+  const sunriseTime = moment(sunrise * 1000).utcOffset(utcOffset).format('HH:mm');
+  const sunsetTime = moment(sunset * 1000).utcOffset(utcOffset).format('HH:mm');
 
-  const [currentDate, setCurrentDate] = useState<string>(moment(currentWeather.dt * 1000).utcOffset(utcOffset).format('dd, D MMMM, HH:mm'));
+  const [currentDate, setCurrentDate] = useState<string>(moment(dt * 1000).utcOffset(utcOffset).format('dd, D MMMM, HH:mm'));
 
   useEffect(() => {
     setCurrentDate(moment().utcOffset(utcOffset).format('dd, D MMMM, HH:mm'));
@@ -37,30 +38,6 @@ const CurrentWeather: React.FC<Props> = ({ currentForecast }) => {
     return () => clearInterval(interval);
   }, [utcOffset]);  
 
-  const sunrise = moment(currentWeather.sys.sunrise * 1000).utcOffset(utcOffset).format('HH:mm');
-  const sunset = moment(currentWeather.sys.sunset * 1000).utcOffset(utcOffset).format('HH:mm');
-  
-  const codeMapping: { [key: string]: string } = {
-  '01d': 'sunny',
-  '01n': 'clear-night',
-  '02d': 'partlycloudy',
-  '02n': 'cloudy',
-  '03d': 'cloudy',
-  '03n': 'cloudy',
-  '04d': 'fog',
-  '04n': 'fog',
-  '09d': 'pouring',
-  '09n': 'pouring',
-  '10d': 'rainy',
-  '10n': 'rainy',
-  '11d': 'lightning-rainy',
-  '11n': 'lightning-rainy',
-  '13d': 'snowy',
-  '13n': 'snowy',
-  '50d': 'windy',
-  '50n': 'windy',
-}; 
-
   return (
     <Content>
       <LocalDate>
@@ -71,7 +48,7 @@ const CurrentWeather: React.FC<Props> = ({ currentForecast }) => {
       <Forecast>
         <Weather>
           <DegreeCelsius temperature={Math.round(temp)}/>
-          <WeatherSvg state={codeMapping[icon] as WeatherState} width={60} height={60} />
+          <WeatherSvg state={weatherIconStateMapping[icon] as weatherStateType} width={60} height={60} />
         </Weather>
         <WeatherDescriotion >{helpers.makeFirstLetterUppercase(description)}</WeatherDescriotion>        
         <TempFeelsLike>
@@ -83,8 +60,8 @@ const CurrentWeather: React.FC<Props> = ({ currentForecast }) => {
       <SunriseSunsetInfo>
         <Label>Схід-захід сонця:</Label>
         <Info>
-          <span><Sunrise />{sunrise}</span>        
-          <span><Sunset />{sunset}</span>
+          <span><Sunrise />{sunriseTime}</span>        
+          <span><Sunset />{sunsetTime}</span>
         </Info>
       </SunriseSunsetInfo>   
       
