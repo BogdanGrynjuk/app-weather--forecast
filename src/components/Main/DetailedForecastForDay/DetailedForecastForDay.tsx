@@ -19,7 +19,7 @@ type Props = {
 
 const DetailedForecastForDay: React.FC<Props> = ({ weatherForecast }) => {
   const hourlyForecastWeather = weatherForecast.hourly.slice(0, 24); 
-  const {humidity, pressure, wind_speed, wind_deg, wind_gust, visibility} = weatherForecast.current
+  const {humidity, pressure, wind_speed, wind_deg, wind_gust, visibility, clouds, uvi} = weatherForecast.current
   const utcOffset = weatherForecast.timezone_offset / 60;
   
   return (
@@ -86,7 +86,7 @@ const DetailedForecastForDay: React.FC<Props> = ({ weatherForecast }) => {
         </Swiper>        
       </Section>
       <Section>
-        <SectionTitle>Поточні погодні характеристики: </SectionTitle>
+        <SectionTitle>Поточні погодні характеристики:</SectionTitle>
         <WeatherParamList>
           <WeatherParamCard
             icon="pressure"
@@ -115,6 +115,22 @@ const DetailedForecastForDay: React.FC<Props> = ({ weatherForecast }) => {
             value={Math.round(wind_speed)}
             unit="м/с"
             description={helpers.getWindDescription(wind_deg, wind_gust)}
+          />
+          <WeatherParamCard
+            className="extra-card"
+            icon="clouds"
+            title="Хмарнісь"
+            value={clouds}
+            unit="%"
+            description={helpers.getCloudsDescription(clouds)}
+          />
+          <WeatherParamCard
+            className="extra-card"
+            icon="uvi"
+            title="УФ індекс"
+            value={uvi}
+            unit=""
+            description={helpers.getUviDescription(uvi)}
           />
         </WeatherParamList>
       </Section>

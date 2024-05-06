@@ -11,7 +11,11 @@ export const CardWrapper = styled.article`
   row-gap: 5px;
   border-radius: 10px;
   background-color: ${p => p.theme.color.bgLight};
-  overflow: hidden;   
+  overflow: hidden;
+  
+  &.extra-card {
+    display: none;
+  }
 
   &::before {
     content: '';
@@ -43,9 +47,12 @@ export const CardWrapper = styled.article`
   }
 
   @media screen and (${p => p.theme.mq.desktop}) {
-    max-width: calc(25% - 15px);
+    &.extra-card {
+      display: flex;
+    }
+    max-width: calc((100% / 3) - 50px);
     padding: 10px;
-    row-gap: 20px;  
+    /* row-gap: 20px;   */
   }  
 `;
 

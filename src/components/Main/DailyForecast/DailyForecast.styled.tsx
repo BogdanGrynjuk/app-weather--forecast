@@ -1,7 +1,5 @@
 import styled from "@emotion/styled";
 
-
-
 export const Wrapper = styled.div`  
   margin-top: 50px; 
   height: 500px;
@@ -32,7 +30,6 @@ export const Wrapper = styled.div`
 
   @media screen and (${p => p.theme.mq.desktop}) {    
     height: 400px;
-    padding: 20px;
     padding-left: 290px;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, 
                     calc(0% - 300px - 50px - 20px) calc(50% - 150px - 20px), 

@@ -43,8 +43,7 @@ export const LocalDate = styled.div`
 export const Label = styled.span`
   color: ${p => p.theme.color.textSecondary};
   font-size: ${p => p.theme.fs.s};
-   font-weight: ${p => p.theme.fw.regular};
-  
+  font-weight: ${p => p.theme.fw.regular};  
   
   @media screen and (${p => p.theme.mq.desktop}) {
     font-size: ${p => p.theme.fs.m};   
@@ -115,3 +114,21 @@ export const Info = styled.div`
     column-gap: 5px;
   }
 `;
+
+export const WarningMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  & :nth-of-type(2) {
+    color: ${p => p.theme.color.textSecondary};
+    font-size: ${p => p.theme.fs.s};
+    font-weight: ${p => p.theme.fw.regular};  
+  
+    @media screen and (${p => p.theme.mq.desktop}) {
+      font-size: 16px;   
+    }
+  }
+
+`

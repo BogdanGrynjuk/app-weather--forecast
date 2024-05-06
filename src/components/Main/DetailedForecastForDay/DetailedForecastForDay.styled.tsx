@@ -3,11 +3,8 @@ import styled from "@emotion/styled";
 export const Wrapper = styled.div`
   height: 100%;
   display: flex;
-  flex-direction: column;
-  
-  @media screen  and (${p => p.theme.mq.desktop}) {
-    justify-content: space-around;
-  }
+  flex-direction: column;  
+ 
 `;
 
 export const Section = styled.section`
@@ -85,11 +82,6 @@ export const WeatherParamList = styled.div`
   flex-wrap: wrap;
 
   @media screen and (${p => p.theme.mq.tablet}) {
-    gap: 10px;
-    
+    gap: 10px;    
   }
-
-  @media screen and (${p => p.theme.mq.desktop}) {
-    gap: 20px;
-  }
-`
+`;

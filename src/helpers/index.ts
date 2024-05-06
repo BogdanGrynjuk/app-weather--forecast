@@ -29,7 +29,7 @@ export const getVisibilityDescription = (value: number): string => {
 
 export const getWindDescription = (deg: number, gust: number): string => {
   let direction: string = "Пн";
-  let gusts: string = "немає";
+  let gusts: string = "-";
   
   if (gust) {
     gusts = `${Math.round(gust)}м/с`;
@@ -45,6 +45,22 @@ export const getWindDescription = (deg: number, gust: number): string => {
   return `${direction}, пориви ${gusts}`;
 };
 
+export const getUviDescription = (uvi: number) => {
+  let risk = `Екстремальний`;
+  if (uvi >= 0 && uvi < 3) risk = 'Низький';
+  if (uvi >= 3 && uvi < 6) risk = 'Середній';
+  if (uvi >= 6 && uvi < 8) risk = 'Високий';
+  if (uvi >= 8 && uvi < 11) risk = 'Дуже високий';
+  return `${risk} ризик`;
+};
+
+export const getCloudsDescription = (clouds: number) => {
+  if (clouds <= 10) return "Чисте небо";
+  if (clouds > 10 && clouds <= 30) return "Малохмарно";
+  if (clouds > 30 && clouds <= 70) return "Місцями хмарно";
+  return "Хмарно";
+}
+
 
 export const helpers = {
   makeFirstLetterUppercase,
@@ -52,7 +68,9 @@ export const helpers = {
   getPressureDescription,
   getHumidityDescription,
   getVisibilityDescription,
-  getWindDescription
+  getWindDescription,
+  getUviDescription,
+  getCloudsDescription
 };
 
 export default helpers;

@@ -40,8 +40,8 @@ const App: React.FC = () => {
           />
         }
 
-        {!isLoading && weatherForecast &&         
-          <Main weatherForecast={weatherForecast } />                
+        {!isLoading && weatherForecast && city &&       
+          <Main weatherForecast={weatherForecast} city={city}/>                
         }
       </Layout>
     </>
