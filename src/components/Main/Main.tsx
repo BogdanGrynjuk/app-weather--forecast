@@ -1,6 +1,7 @@
-import React from 'react'
-import { Wrapper } from './Main.styled'
-import DailyForecast from './DailyForecast';
+import React from 'react';
+
+import { Wrapper } from './Main.styled';
+import GeneralWeatherForecast from './GeneralWeatherForecast';
 import CurrentWeather from './CurrentWeather';
 import { cityType, weatherDataType } from 'types';
 
@@ -14,7 +15,7 @@ const Main: React.FC<Props> = ({ weatherForecast, city }) => {
   return (
     <Wrapper>
       <CurrentWeather weatherForecast={weatherForecast} city={city} />
-      <DailyForecast  weatherForecast={ weatherForecast }/>
+      <GeneralWeatherForecast  weatherForecast={ weatherForecast }/>
     </Wrapper>
   );
 }

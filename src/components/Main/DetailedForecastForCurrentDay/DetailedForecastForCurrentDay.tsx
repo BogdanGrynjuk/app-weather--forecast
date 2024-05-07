@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import DegreeCelsius from 'components/DegreeCelsius';
-import { Date, Section, SectionTitle, TempItem, WeatherParamList, Wrapper } from './DetailedForecastForDay.styled';
+import { Date, Section, SectionTitle, TempItem, WeatherParamList, Wrapper } from './DetailedForecastForCurrentDay.styled';
 import WeatherParamCard from '../WeatherParamCard/WeatherParamCard';
 import helpers from 'helpers';
 import { weatherDataType } from 'types';
@@ -17,8 +17,8 @@ type Props = {
   weatherForecast: weatherDataType
 };
 
-const DetailedForecastForDay: React.FC<Props> = ({ weatherForecast }) => {
-  const hourlyForecastWeather = weatherForecast.hourly.slice(0, 24); 
+const DetailedForecastForCurrentDay: React.FC<Props> = ({ weatherForecast }) => {
+  const hourlyForecastWeather = weatherForecast.hourly.slice(0, 25); 
   const {humidity, pressure, wind_speed, wind_deg, wind_gust, visibility, clouds, uvi} = weatherForecast.current
   const utcOffset = weatherForecast.timezone_offset / 60;
   
@@ -138,4 +138,4 @@ const DetailedForecastForDay: React.FC<Props> = ({ weatherForecast }) => {
   );
 }
 
-export default DetailedForecastForDay;
+export default DetailedForecastForCurrentDay;

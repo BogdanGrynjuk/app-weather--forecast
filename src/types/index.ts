@@ -138,7 +138,7 @@ type weatherConditionType = {
   main: string;
 };
 
-type dailyWeatherDataType = {
+export type dailyWeatherDataType = {
   clouds: number;
   dew_point: number;
   dt: number;

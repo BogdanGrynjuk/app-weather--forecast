@@ -130,5 +130,4 @@ export const WarningMessage = styled.div`
       font-size: 16px;   
     }
   }
-
-`
+`;
