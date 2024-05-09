@@ -27,6 +27,7 @@ const useWeatherForecast = () => {
     try {
       if ('geolocation' in navigator) {
         const permissionStatus = await navigator.permissions?.query({ name: 'geolocation' });
+        alert(permissionStatus.state)
         if (permissionStatus?.state === 'granted') {
           navigator.geolocation.getCurrentPosition(function (position) {
             setLatitude(position.coords.latitude);
