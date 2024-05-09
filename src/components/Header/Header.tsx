@@ -9,12 +9,12 @@ import DecorationStripe from './DecorationStripe';
 import ErrorMessage from 'components/ErrorMessage';
 
 type Props = {
-  city: cityType | null
-  term: string
-  options: []
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void
-  handleSubmit: (e: FormEvent<HTMLFormElement>) => void
-  handleOptionSelect: (option: cityType) => void
+  city: cityType | null,
+  term: string,
+  options: [],
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void,
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void,
+  handleOptionSelect: (option: cityType) => void,
   handleClearOptionSelect: () => void
 }
 
@@ -38,8 +38,8 @@ const Header: React.FC<Props> = (
 
   const customError = {
     errorMessage: "Локацію не знайдено",
-    actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
-  }
+    actionMessage: "Введіть назву населеного пункту"
+  };
 
   return (
     <Wrapper>

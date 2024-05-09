@@ -5,8 +5,8 @@ import useWeatherForecast from "hooks/useWeatherForecast";
 import Layout from "components/Layout";
 import Header from "components/Header";
 import Loader from "components/Loader";
-import ErrorMessage from "components/ErrorMessage";
 import Main from "components/Main";
+import Error from "components/Error";
 
 const App: React.FC = () => { 
 
@@ -27,20 +27,20 @@ const App: React.FC = () => {
     <>      
       <Layout>        
         {isLoading && <Loader />}
-        {error && <ErrorMessage error={error} />}
         {!isLoading &&          
           <Header
-            city={city}
-            term={term}
-            options={options}
-            handleInputChange={handleInputChange}
-            handleSubmit={handleSubmit}
-            handleOptionSelect={handleOptionSelect}
-            handleClearOptionSelect={handleClearOptionSelect}
+          city={city}
+          term={term}
+          options={options}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          handleOptionSelect={handleOptionSelect}
+          handleClearOptionSelect={handleClearOptionSelect}
           />
         }
+        {error && <Error error={error} />}
 
-        {!isLoading && weatherForecast && city &&       
+        {!isLoading && !error && weatherForecast && city &&       
           <Main weatherForecast={weatherForecast} city={city}/>                
         }
       </Layout>

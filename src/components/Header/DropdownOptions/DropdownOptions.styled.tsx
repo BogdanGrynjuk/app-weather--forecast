@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 
-
 export const List = styled.ul`
   position: absolute;
   top: 0;  
@@ -10,6 +9,10 @@ export const List = styled.ul`
   border-radius: 10px;
   padding: 70px 10px 10px; 
   z-index: 1;
+
+  @media screen and (${p => p.theme.mq.tablet}) {
+    padding-top: 80px;
+  }
 `;
 
 export const Item = styled.li`

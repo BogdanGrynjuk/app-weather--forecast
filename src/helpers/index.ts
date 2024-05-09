@@ -59,8 +59,7 @@ export const getCloudsDescription = (clouds: number) => {
   if (clouds > 10 && clouds <= 30) return "Малохмарно";
   if (clouds > 30 && clouds <= 70) return "Місцями хмарно";
   return "Хмарно";
-}
-
+};
 
 export const helpers = {
   makeFirstLetterUppercase,

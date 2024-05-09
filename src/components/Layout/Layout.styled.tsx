@@ -18,7 +18,6 @@ export const Content = styled.div`
   width: 320px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   row-gap: 10px;
   
   @media screen and (${ p => p.theme.mq.tablet }) {
