@@ -30,7 +30,7 @@ export const Wrapper = styled.div`
 
   @media screen and (${p => p.theme.mq.desktop}) {    
     height: 400px;
-    padding-left: 290px;
+    padding-left: 280px;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, 
                     calc(0% - 300px - 50px - 20px) calc(50% - 150px - 20px), 
                     calc(0% - 300px - 50px - 20px) calc(50% + 150px + 20px), 

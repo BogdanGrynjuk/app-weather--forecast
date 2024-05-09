@@ -29,8 +29,16 @@ export const List = styled.ul`
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;  
+  justify-content: space-between;
+  
+  @media screen and (${p => p.theme.mq.desktop}) {
+    flex-direction: row;
+  }
 `;
 
 export const Item = styled.li`
+   @media screen and (${p => p.theme.mq.desktop}) {
+    height: 100%;
+    width: calc(100% / 5 - 5px);
+  }
 `;

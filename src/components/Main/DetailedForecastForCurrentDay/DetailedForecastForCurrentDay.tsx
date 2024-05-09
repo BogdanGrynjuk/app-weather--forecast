@@ -54,7 +54,7 @@ const DetailedForecastForCurrentDay: React.FC<Props> = ({ weatherForecast }) => 
           {hourlyForecastWeather.map((item) => (
             <React.Fragment key={item.dt}>
               {
-                moment(item.dt * 1000).format("HH:mm") === "00:00" &&
+                moment(item.dt * 1000).utcOffset(utcOffset).format("HH:mm") === "00:00" &&
                 <SwiperSlide key={`${item.dt}-date`}>
                   <Date className={
                     (
@@ -73,7 +73,7 @@ const DetailedForecastForCurrentDay: React.FC<Props> = ({ weatherForecast }) => 
               }
               <SwiperSlide key={`${item.dt}-temp`}>
                 <TempItem>
-                  <span>{moment(item.dt * 1000).format("HH:mm")}</span>
+                  <span>{moment(item.dt * 1000).utcOffset(utcOffset).format("HH:mm")}</span>
                   <img
                     alt={`weather-icon-${item.weather[0].description}`}
                     src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
