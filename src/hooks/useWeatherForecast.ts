@@ -16,44 +16,44 @@ const useWeatherForecast = () => {
   const [isLocationLoaded, setIsLocationLoaded] = useState<boolean>(false);
   const [isForecastLoaded, setIsForecastLoaded] = useState<boolean>(false);
   const [initialLoadComplete, setInitialLoadComplete] = useState<boolean>(false);
- 
-  
+   
   const KEY_OPENWEATHER_API = "55670bb2efaf12adf423f24ce8ac3e30";
   const URL_OPENWEATHER_API = "https://api.openweathermap.org";
 
   const DEBOUNCE_DELAY = 500;
-
-  interface IPosition {
-    coords: {
-      latitude: number;
-      longitude: number;
-    };
-  };  
   
   const getCoordinatesByGeolocationAPI = useCallback(async () => {
     setError(null);
-    try {    
-      const permissionStatus = await navigator.permissions?.query({ name: 'geolocation' });
-      if (permissionStatus?.state === 'granted') {
-        const position: IPosition = await new Promise((resolve, reject) => {
-          navigator.geolocation.getCurrentPosition(resolve, reject);
-        });
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
+    try {
+      if ('geolocation' in navigator) {
+        const permissionStatus = await navigator.permissions?.query({ name: 'geolocation' });
+        if (permissionStatus?.state === 'granted') {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+          });
+        } else {
+          console.error('Geolocation permission not granted');
+          setError({
+            errorMessage: "Ваш браузер блокує дозвіл на отримання поточної геолокації",
+            actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
+          });
+          setIsLoading(false);
+        }
       } else {
-        console.error('Geolocation permission not granted');
+        console.error('Geolocation is not supported in this browser');
         setError({
-          errorMessage: "Ваш браузер блокує дозвіл на отримання поточної геолокації",
+          errorMessage: "Геолокація не підтримується в цьому браузері",
           actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
         });
         setIsLoading(false);
-      }    
+      }
     } catch (error) {
       console.error("Error fetching geolocation: ", error);
       setError({
-          errorMessage: "Не можливо отримати Ваші координати",
-          actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
-        })        
+        errorMessage: "Не можливо отримати Ваші координати",
+        actionMessage: "Будь ласка введіть назву населеного пункту у поле пошуку"
+      });
     } finally {
       setIsCoordinatesLoaded(true);
     }
