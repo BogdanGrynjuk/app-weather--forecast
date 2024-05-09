@@ -18,7 +18,11 @@ export const Wrapper = styled.div`
 
 export const ShortDate = styled.span`  
   font-size: 16px;
-  font-weight: ${p => p.theme.fw.bold}; 
+  font-weight: ${p => p.theme.fw.bold};
+  
+  &.isDayOff {
+    color: rgba(220, 20, 60, 1);
+  }
   
   @media screen and (${p => p.theme.mq.tablet}) {
     font-size: ${p => p.theme.fs.m};
@@ -35,6 +39,10 @@ export const LongDate = styled.div`
   & > span:nth-of-type(2) {
     font-size: ${p => p.theme.fs.xl};
     font-weight: ${p => p.theme.fw.bold};
+  }
+
+  &.isDayOff {
+    color: rgba(220, 20, 60, 1);
   }
 
   @media screen and (${p => p.theme.mq.desktop}) {    
@@ -133,6 +141,14 @@ export const WeatherCharacteristics = styled.div`
       width: 100%;
       background-color: ${p => p.theme.color.textPrimaryLight};
     }
+
+    &::before{
+      margin-top: 5px;
+    }
+
+    &::after{
+      margin-bottom: 5px;
+    }
   }  
 `;
 
@@ -140,10 +156,32 @@ export const Characteristic = styled.span`
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-`
+`;
 
 export const Value = styled.span`
   flex-basis: 75%;
   font-size: 16px;
   text-align: right;
 `;
+
+export const SunriseSunsetInfo = styled.span`
+  display: none;
+
+  @media screen and (${p => p.theme.mq.desktop}) {
+    display: flex;  
+    column-gap: 15px;
+  
+    & > span {
+      display: flex;
+      align-items: center;
+      column-gap: 5px;
+      font-size: 16px;
+    }
+  }
+`;
+
+export const WarningMessage = styled.span`
+  font-size: ${p => p.theme.fs.s};
+  color: ${p => p.theme.color.textPrimaryLight};
+  text-align: center;
+`

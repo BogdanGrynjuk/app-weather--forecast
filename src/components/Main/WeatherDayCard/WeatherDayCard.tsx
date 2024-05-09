@@ -2,14 +2,15 @@ import React from 'react';
 import moment from 'moment';
 import { WeatherSvg } from 'weather-icons-animated';
 
+import { Characteristic, Forecast, LongDate, Marker, ShortDate, SunriseSunsetInfo, Temp, Value, WarningMessage, WeatherCharacteristics, WeatherDescription, WeatherIcon, WeatherInfo, Wrapper } from './WeatherDayCard.styled';
+
 import DegreeCelsius from 'components/DegreeCelsius';
+import Sunrise from 'components/Icons/Sunrise';
+import Sunset from 'components/Icons/Sunset';
 
 import weatherIconStateMapping from 'constants/weatherIconStateMapping';
 import helpers from 'helpers';
 import { dailyWeatherDataType, weatherStateType } from 'types';
-import { Characteristic, Forecast, LongDate, Marker, ShortDate, Temp, Value, WeatherCharacteristics, WeatherDescription, WeatherIcon, WeatherInfo, Wrapper } from './WeatherDayCard.styled';
-import Sunrise from 'components/Icons/Sunrise';
-import Sunset from 'components/Icons/Sunset';
 
 type Props = {
   dailyWeatherForecast: dailyWeatherDataType,
@@ -17,7 +18,7 @@ type Props = {
 };
 
 const getWindDirection = (deg: number): string => {
-  let direction: string = "Пн"; 
+  let direction: string = "Пн";
   if (deg > 15 && deg <= 75) direction = "Пн-сх";
   if (deg > 76 && deg <= 105) direction = "Сх";
   if (deg > 105 && deg <= 165) direction = "Пд-Сх";
@@ -26,7 +27,7 @@ const getWindDirection = (deg: number): string => {
   if (deg > 255 && deg <= 285) direction = "Зх";
   if (deg > 285 && deg <= 345) direction = "Пн-Зх";
   return direction;
-} 
+};
 
 const WeatherDayCard: React.FC<Props> = ({ dailyWeatherForecast, utcOffset }) => {
   const { dt, weather, temp, humidity, pop, pressure, wind_deg, wind_speed, sunrise, sunset} = dailyWeatherForecast;
@@ -36,11 +37,13 @@ const WeatherDayCard: React.FC<Props> = ({ dailyWeatherForecast, utcOffset }) =>
   const sunsetTime = moment(sunset * 1000).utcOffset(utcOffset).format('HH:mm');
   const [ day, date, month ] = longDate.split(" ");
   const { icon, description } = weather[0];
+  const isDayOff = (moment(dt * 1000).utcOffset(utcOffset).format("dd").toLowerCase() === "сб" ||
+                  moment(dt * 1000).utcOffset(utcOffset).format("dd").toLowerCase() === "нд");
 
   return (
     <Wrapper>
-      <ShortDate>{shortDate}</ShortDate>
-      <LongDate>
+      <ShortDate className={isDayOff ? 'isDayOff' : ''}>{shortDate}</ShortDate>
+      <LongDate className={isDayOff ? 'isDayOff' : ''}>
         <span>{day}</span>
         <span>{date}</span>
         <span>{month}</span>
@@ -76,21 +79,17 @@ const WeatherDayCard: React.FC<Props> = ({ dailyWeatherForecast, utcOffset }) =>
           
           {sunrise && sunset
             ?
-            <span>
+            <SunriseSunsetInfo>
               <span><Sunrise />{sunriseTime}</span>
               <span><Sunset />{sunsetTime}</span>
-            </span>
+            </SunriseSunsetInfo>
             :
-            <span>
+            <WarningMessage>
               Локація знаходиться у полярній області
-            </span>
+            </WarningMessage>
           }
-
-        </WeatherInfo>
-        
-      </Forecast>
-      
-      
+        </WeatherInfo>        
+      </Forecast>      
     </Wrapper>
   );
 }
